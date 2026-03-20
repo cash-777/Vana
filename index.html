@@ -449,16 +449,32 @@ async function pullEventSchedule(eventKey) {
 const statboticsApi = 'https://api.statbotics.io/v3';
 
 async function getTeamStats(number, eventKey) {
+  if(!eventKey) return null;
   try {
-    const response = await fetch(`${statboticsApi}/team_event/${number}/${eventKey}`);
-    const data = await response.json();
-    return {
-      epa:  data.epa?.total_points?.mean ?? null,
-      rank: data.record?.qual?.rank ?? null,
-      name: data.team_name ?? null,
-    };
-  } catch(error) {
-    console.error('Failed to fetch team stats:', error);
+    dbg('calling getData('+number+', '+eventKey+')');
+    var stats = await getData(number, eventKey);
+    dbg('Team '+number+': '+(stats?JSON.stringify(stats):'null'));
+    if(!stats) return null;
+    // Cache EPA
+    if(stats.epa != null){
+      var epaCache=ld('vana2-epa',{});
+      epaCache[String(number)]=Math.round(stats.epa*10)/10;
+      sv('vana2-epa',epaCache);
+    }
+    // Cache rank
+    if(stats.rank != null){
+      var rankCache=ld('vana2-rank',{});
+      rankCache[String(number)]=stats.rank;
+      sv('vana2-rank',rankCache);
+    }
+    // Cache name
+    if(stats.name && !teamNames[String(number)]){
+      teamNames[String(number)]=stats.name;
+      pNm();
+    }
+    return stats;
+  } catch(e){
+    dbg('getTeamStats error: '+e.message);
     return null;
   }
 }

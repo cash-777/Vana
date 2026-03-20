@@ -19,5 +19,4 @@ async function getStats(number, eventCode) {
   }
 }
 
-// Test it
-getTeamStats(3937, '2026arli').then(stats => console.log(stats));
+

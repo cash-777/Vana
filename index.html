@@ -946,14 +946,28 @@ async function fetchNamesForTeams(teams){
 // ═══════════════════════════════════════════════
 // DEBUG LOG
 // ═══════════════════════════════════════════════
-function dbg(msg, data){
-  var el=document.getElementById('debug-log');
-  var entries=document.getElementById('debug-entries');
-  if(!el||!entries) return;
-  el.style.display='block';
-  var ts=new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+function dbg(msg,data){
   var extra=data!==undefined?' => '+JSON.stringify(data):'';
-  entries.textContent+='['+ts+'] '+msg+extra+'\n';
+  var ts=new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  var line='['+ts+'] '+msg+extra;
+  // buffer it
+  if(!window._dbgBuf) window._dbgBuf=[];
+  window._dbgBuf.push(line);
+  // try to write to panel if visible
+  var entries=document.getElementById('debug-entries');
+  var el=document.getElementById('debug-log');
+  if(entries&&el){
+    el.style.display='block';
+    entries.textContent=window._dbgBuf.join('\n');
+    entries.scrollTop=entries.scrollHeight;
+  }
+}
+function flushDebug(){
+  var entries=document.getElementById('debug-entries');
+  var el=document.getElementById('debug-log');
+  if(!entries||!el||!window._dbgBuf||!window._dbgBuf.length) return;
+  el.style.display='block';
+  entries.textContent=window._dbgBuf.join('\n');
   entries.scrollTop=entries.scrollHeight;
 }
 function clearDebug(){
@@ -1025,6 +1039,7 @@ async function refreshAllStats(){
 // STATS TAB
 // ═══════════════════════════════════════════════
 function renderStats(){
+  flushDebug();
   // Pre-fill test box with saved event key
   var ek=localStorage.getItem('vana2-eventkey')||'';
   var ekInp=document.getElementById('test-event');

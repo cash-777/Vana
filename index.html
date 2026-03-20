@@ -280,6 +280,11 @@ textarea.inp{resize:none;line-height:1.6;}
         <button class="btn S sm" id="refresh-btn" onclick="refreshAllStats()">↻ Refresh</button>
       </div>
       <div id="stats-content"></div>
+      <div id="debug-log" style="margin-top:16px;background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:12px;display:none;">
+        <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--t3);margin-bottom:8px;">Debug Log</div>
+        <div id="debug-entries" style="font-family:JetBrains Mono,monospace;font-size:0.72rem;color:var(--t2);line-height:1.8;white-space:pre-wrap;word-break:break-all;max-height:300px;overflow-y:auto;"></div>
+        <button class="btn S sm" style="margin-top:8px;" onclick="clearDebug()">Clear</button>
+      </div>
     </div>
 
     <!-- ── EXPORT TAB ── -->
@@ -927,6 +932,24 @@ async function fetchNamesForTeams(teams){
   renderTeams();
 }
 
+
+// ═══════════════════════════════════════════════
+// DEBUG LOG
+// ═══════════════════════════════════════════════
+function dbg(msg, data){
+  var el=document.getElementById('debug-log');
+  var entries=document.getElementById('debug-entries');
+  if(!el||!entries) return;
+  el.style.display='block';
+  var ts=new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  var extra=data!==undefined?' => '+JSON.stringify(data):'';
+  entries.textContent+='['+ts+'] '+msg+extra+'\n';
+  entries.scrollTop=entries.scrollHeight;
+}
+function clearDebug(){
+  document.getElementById('debug-entries').textContent='';
+  document.getElementById('debug-log').style.display='none';
+}
 
 // ═══════════════════════════════════════════════
 // REFRESH ALL STATS

@@ -992,6 +992,7 @@ async function runAPITest(){
 async function refreshAllStats(){
   var eventKey=localStorage.getItem('vana2-eventkey')||'';
   if(!eventKey){toast('Set event key in Settings first','err');return;}
+  dbg('Refreshing with event key: '+eventKey);
 
   // Gather all unique teams
   var teamSet={};
@@ -1007,7 +1008,8 @@ async function refreshAllStats(){
 
   var done=0;
   for(var i=0;i<allTeams.length;i++){
-    await getTeamStats(allTeams[i], eventKey);
+    var s=await getTeamStats(allTeams[i], eventKey);
+    dbg('Team '+allTeams[i]+': '+(s?JSON.stringify(s):'null'));
     done++;
     btn.textContent='↻ '+done+'/'+allTeams.length+'…';
   }
@@ -1023,6 +1025,10 @@ async function refreshAllStats(){
 // STATS TAB
 // ═══════════════════════════════════════════════
 function renderStats(){
+  // Pre-fill test box with saved event key
+  var ek=localStorage.getItem('vana2-eventkey')||'';
+  var ekInp=document.getElementById('test-event');
+  if(ekInp&&ek&&!ekInp.value) ekInp.value=ek;
   var el=document.getElementById('stats-content');
 
   // Gather all unique teams

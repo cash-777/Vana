@@ -1,6 +1,6 @@
 const statboticsApi = 'https://api.statbotics.io/v3'
 
-async function getTeamStats(number, eventCode) {
+async function getStats(number, eventCode) {
   try {
     const response = await fetch(`${statboticsApi}/team_event/${number}/${eventCode}`);
     

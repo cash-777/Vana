@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Vana — Breakaway Scouting</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+:root{
+  --bg:#080000;--s1:#0f0000;--s2:#180000;--s3:#200000;
+  --border:#350808;--border2:#451212;
+  --acc:#ef4444;--acc2:#dc2626;--acc3:#b91c1c;
+  --acc-dim:rgba(239,68,68,0.1);--acc-glow:rgba(239,68,68,0.2);
+  --green:#22c55e;--blue:#3b82f6;--purple:#a855f7;--orange:#f97316;--yellow:#facc15;
+  --text:#f5eeee;--t2:#aa9090;--t3:#5a3535;--t4:#351818;
+  --safe-t:env(safe-area-inset-top,44px);--safe-b:env(safe-area-inset-bottom,20px);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;height:100%;overflow:hidden;-webkit-font-smoothing:antialiased;}
+.app{display:flex;flex-direction:column;height:100dvh;max-width:430px;margin:0 auto;overflow:hidden;}
+.safe-top{height:var(--safe-t);background:var(--bg);flex-shrink:0;}
+
+/* TOPBAR */
+.topbar{display:flex;align-items:center;padding:10px 16px;gap:10px;flex-shrink:0;border-bottom:1px solid var(--border);background:var(--bg);}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:0.1em;color:var(--acc);line-height:1;flex-shrink:0;text-shadow:0 0 24px var(--acc-glow);}
+.logo-sub{font-size:0.64rem;color:var(--t3);font-family:'IBM Plex Mono',monospace;flex:1;letter-spacing:0.04em;}
+.iBtn{background:var(--s2);border:1px solid var(--border);color:var(--t2);width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;flex-shrink:0;-webkit-user-select:none;transition:all 0.12s;}
+.iBtn:active{background:var(--s3);transform:scale(0.9);}
+.iBtn.red{background:var(--acc-dim);border-color:rgba(239,68,68,0.25);color:var(--acc);}
+
+/* SCROLL + VIEWS */
+.scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;}
+.view{display:none;padding:14px 16px;}
+.view.on{display:block;}
+
+/* TABBAR */
+.tabbar{flex-shrink:0;display:flex;background:rgba(8,0,0,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);padding-top:8px;padding-bottom:var(--safe-b);}
+.tabitem{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:2px 0 4px;-webkit-user-select:none;}
+.tabitem .ti{font-size:1.1rem;line-height:1;transition:transform 0.12s;}
+.tabitem:active .ti{transform:scale(0.82);}
+.tabitem .tl{font-size:0.56rem;font-weight:600;letter-spacing:0.04em;color:var(--t3);}
+.tabitem.on .tl{color:var(--acc);}
+.tabitem:not(.on) .ti{filter:grayscale(1) opacity(0.22);}
+
+.sh{font-family:'Bebas Neue',sans-serif;font-size:0.85rem;letter-spacing:0.12em;color:var(--t3);margin-bottom:8px;margin-top:2px;}
+
+/* INPUTS */
+.inp{width:100%;background:var(--s2);border:1.5px solid var(--border);border-radius:10px;padding:11px 13px;font-family:'IBM Plex Sans',sans-serif;font-size:0.95rem;color:var(--text);outline:none;-webkit-appearance:none;transition:border-color 0.15s;}
+.inp:focus{border-color:var(--acc);}
+.inp::placeholder{color:var(--t3);}
+textarea.inp{resize:none;min-height:90px;line-height:1.6;}
+
+/* LABELS */
+.lw{display:flex;flex-wrap:wrap;gap:5px;}
+.lbl{padding:5px 10px;border-radius:100px;font-size:0.7rem;font-weight:600;cursor:pointer;border:1.5px solid transparent;-webkit-user-select:none;white-space:nowrap;transition:all 0.1s;}
+.lbl:active{transform:scale(0.93);}
+.lbl.off{background:var(--s3);border-color:var(--border2);color:var(--t2);}
+.lbl.on.dnp{background:rgba(239,68,68,0.18);border-color:var(--acc);color:var(--acc);}
+.lbl.on.shuttler{background:rgba(59,130,246,0.15);border-color:#3b82f6;color:#3b82f6;}
+.lbl.on.defbot{background:rgba(249,115,22,0.15);border-color:#f97316;color:#f97316;}
+.lbl.on.unreliable{background:rgba(239,68,68,0.1);border-color:#f87171;color:#f87171;}
+.lbl.on.beachprone{background:rgba(168,85,247,0.15);border-color:#a855f7;color:#a855f7;}
+.lbl.on.qdrivers{background:rgba(34,197,94,0.15);border-color:#22c55e;color:#22c55e;}
+.lbl.on.fast{background:rgba(250,204,21,0.15);border-color:#facc15;color:#facc15;}
+.lbl.on.slow{background:rgba(113,113,122,0.2);border-color:#71717a;color:#a1a1aa;}
+.lbl.on.highcycler{background:rgba(34,197,94,0.18);border-color:#22c55e;color:#22c55e;}
+.lbl.on.climber{background:rgba(59,130,246,0.15);border-color:#3b82f6;color:#3b82f6;}
+.lbl.on.penaltyprone{background:rgba(239,68,68,0.15);border-color:var(--acc);color:var(--acc);}
+.lbl.on.goodauto{background:rgba(34,197,94,0.18);border-color:#22c55e;color:#22c55e;}
+.lbl.on.noauto{background:rgba(239,68,68,0.15);border-color:var(--acc);color:var(--acc);}
+.lbl.on.weakauto{background:rgba(249,115,22,0.13);border-color:#f97316;color:#f97316;}
+.lbl.on.fragile{background:rgba(168,85,247,0.15);border-color:#a855f7;color:#a855f7;}
+.lbl.on.kitbot{background:rgba(250,204,21,0.12);border-color:#facc15;color:#facc15;}
+
+/* STAR RATING */
+.stars{display:flex;gap:4px;margin:4px 0;}
+.star{font-size:1.3rem;cursor:pointer;-webkit-user-select:none;transition:transform 0.1s;line-height:1;}
+.star:active{transform:scale(0.85);}
+.star.on{filter:drop-shadow(0 0 4px rgba(239,68,68,0.6));}
+
+/* TEAM ROWS */
+.team-row{display:flex;align-items:center;gap:10px;padding:11px 12px;background:var(--s1);border:1px solid var(--border);border-radius:12px;margin-bottom:7px;cursor:pointer;-webkit-user-select:none;}
+.team-row:active{background:var(--s2);}
+.nb{background:var(--acc-dim);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:6px 9px;font-family:'IBM Plex Mono',monospace;font-size:0.88rem;color:var(--acc);min-width:56px;text-align:center;flex-shrink:0;}
+.tr-info{flex:1;min-width:0;}
+.tr-name{font-weight:600;font-size:0.87rem;}
+.tr-meta{font-size:0.7rem;color:var(--t2);margin-top:1px;}
+.tr-stars{font-size:0.75rem;margin-top:3px;letter-spacing:1px;}
+
+/* NOTE ENTRIES */
+.note-entry{background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px;}
+.note-header{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.note-match-inp{background:transparent;border:none;border-bottom:1px solid var(--border2);color:var(--t2);font-family:'IBM Plex Mono',monospace;font-size:0.68rem;width:80px;outline:none;padding:1px 2px;-webkit-appearance:none;}
+.note-match-inp:focus{border-bottom-color:var(--acc);color:var(--text);}
+.note-scout{font-size:0.63rem;color:var(--t3);font-family:'IBM Plex Mono',monospace;}
+.note-ts{font-size:0.63rem;color:var(--t3);flex:1;}
+.note-del{background:rgba(239,68,68,0.1);border:none;color:var(--acc);font-size:0.62rem;font-weight:700;padding:3px 8px;border-radius:5px;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;-webkit-user-select:none;flex-shrink:0;}
+.note-del:active{background:rgba(239,68,68,0.25);}
+.note-lbls-edit{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;}
+.note-body-inp{width:100%;background:var(--s3);border:1px solid var(--border2);border-radius:7px;padding:8px 10px;font-family:'IBM Plex Sans',sans-serif;font-size:0.84rem;color:var(--text);line-height:1.6;resize:none;min-height:58px;outline:none;-webkit-appearance:none;}
+.note-body-inp:focus{border-color:var(--acc);}
+.note-save-row{display:flex;justify-content:flex-end;margin-top:6px;}
+.note-save-btn{background:var(--acc-dim);border:1px solid rgba(239,68,68,0.3);color:var(--acc);font-size:0.7rem;font-weight:700;padding:4px 12px;border-radius:6px;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;}
+
+/* BUTTONS */
+.btn{width:100%;padding:13px;border:none;border-radius:12px;font-family:'IBM Plex Sans',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;-webkit-user-select:none;display:flex;align-items:center;justify-content:center;gap:7px;transition:all 0.12s;}
+.btn:active{transform:scale(0.97);}
+.btn.P{background:var(--acc);color:#1a0000;}
+.btn.P:active{background:var(--acc2);}
+.btn.S{background:var(--s2);border:1px solid var(--border2);color:var(--text);}
+.btn.S:active{background:var(--s3);}
+.btn.D{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);color:var(--acc);}
+.sm{padding:9px;font-size:0.82rem;}
+
+/* SEARCH */
+.sw{position:relative;margin-bottom:10px;}
+.sw .inp{padding-left:33px;}
+.si{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--t3);font-size:0.88rem;pointer-events:none;}
+
+.div{height:1px;background:var(--border);margin:12px 0;}
+
+/* EMPTY */
+.empty{text-align:center;padding:36px 16px;color:var(--t3);}
+.empty-i{font-size:2rem;margin-bottom:8px;}
+.empty-t{font-weight:700;font-size:0.88rem;color:var(--t2);margin-bottom:4px;}
+.empty-s{font-size:0.77rem;line-height:1.5;}
+
+/* BACK HEADER */
+.back-hdr{display:flex;align-items:center;gap:8px;padding:12px 16px 10px;border-bottom:1px solid var(--border);-webkit-user-select:none;flex-shrink:0;background:var(--bg);}
+.back-btn{display:flex;align-items:center;gap:6px;cursor:pointer;}
+.back-btn:active{opacity:0.7;}
+.back-a{color:var(--acc);font-size:1.1rem;}
+.back-t{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.06em;color:var(--t2);}
+
+/* STATS */
+.sg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;}
+.sbox{background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center;}
+.sv{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--acc);line-height:1;}
+.sk{font-size:0.6rem;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:0.08em;margin-top:3px;}
+
+/* MODAL */
+.mo{position:fixed;inset:0;background:rgba(0,0,0,0.82);z-index:800;display:none;align-items:flex-end;}
+.mo.on{display:flex;}
+.mp{background:var(--s1);border:1px solid var(--border);border-top-left-radius:20px;border-top-right-radius:20px;padding:18px 18px calc(18px + var(--safe-b));width:100%;max-height:90dvh;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.mt{font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:0.06em;margin-bottom:13px;color:var(--t2);display:flex;justify-content:space-between;align-items:center;}
+.mc{background:var(--s3);border:1px solid var(--border);color:var(--t2);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.78rem;flex-shrink:0;}
+.fl{font-size:0.67rem;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:5px;}
+
+/* DETAIL */
+.dv{display:none;position:fixed;inset:0;background:var(--bg);z-index:300;max-width:430px;margin:0 auto;flex-direction:column;}
+.dv.on{display:flex;}
+.ds{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px 16px 40px;}
+
+/* SCHEDULE */
+.sched-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--s1);border:1px solid var(--border);border-radius:10px;margin-bottom:6px;}
+.sched-check{width:22px;height:22px;border-radius:6px;border:2px solid var(--border2);background:var(--s2);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;font-size:0.75rem;-webkit-user-select:none;}
+.sched-check.done{background:var(--acc-dim);border-color:rgba(239,68,68,0.4);color:var(--acc);}
+.sched-info{flex:1;min-width:0;}
+.sched-match{font-family:'IBM Plex Mono',monospace;font-size:0.8rem;font-weight:500;}
+.sched-team{font-size:0.72rem;color:var(--t2);margin-top:1px;}
+.sched-match.done-txt{text-decoration:line-through;color:var(--t3);}
+.sched-del{background:none;border:none;color:var(--t3);font-size:0.9rem;cursor:pointer;padding:2px 6px;}
+.sched-del:active{color:var(--acc);}
+.progress-bar{height:4px;background:var(--s3);border-radius:2px;margin-bottom:14px;overflow:hidden;}
+.progress-fill{height:4px;background:var(--acc);border-radius:2px;transition:width 0.3s;}
+
+/* SETTINGS */
+.setting-group{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:12px;}
+.setting-row{padding:10px 0;border-bottom:1px solid var(--border);}
+.setting-row:last-child{border-bottom:none;padding-bottom:0;}
+.setting-row:first-child{padding-top:0;}
+.s-lbl{font-weight:600;font-size:0.87rem;margin-bottom:4px;}
+.s-sub{font-size:0.73rem;color:var(--t2);line-height:1.45;margin-bottom:8px;}
+
+/* IMPORT area */
+.import-area{width:100%;background:var(--s2);border:1.5px dashed var(--border2);border-radius:10px;padding:12px;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:var(--t2);min-height:80px;outline:none;resize:none;line-height:1.5;}
+.import-area:focus{border-color:var(--acc);}
+
+/* TOAST */
+.toast{position:fixed;bottom:calc(64px + var(--safe-b));left:50%;transform:translateX(-50%) translateY(10px);background:var(--s2);border:1px solid var(--border2);color:var(--text);padding:8px 18px;border-radius:100px;font-size:0.79rem;font-weight:600;opacity:0;transition:all 0.22s;pointer-events:none;white-space:nowrap;z-index:9999;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.toast.ok{border-color:var(--green);color:var(--green);}
+.toast.err{border-color:var(--acc);color:var(--acc);}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="safe-top"></div>
+  <div class="topbar">
+    <div class="logo">Vana</div>
+    <div class="logo-sub">Breakaway · FRC 2026</div>
+    <div class="iBtn red" onclick="openAddModal()" title="Add note">＋</div>
+  </div>
+
+  <div class="scroll" id="main-scroll">
+
+    <!-- TEAMS TAB -->
+    <div id="view-teams" class="view on">
+      <div class="sw">
+        <span class="si">🔍</span>
+        <input class="inp" id="team-search" style="padding-left:33px;" type="search" placeholder="Search by team number…" oninput="renderTeams()">
+      </div>
+      <div id="teams-list"></div>
+    </div>
+
+    <!-- SCHEDULE TAB -->
+    <div id="view-schedule" class="view">
+      <div style="display:flex;gap:8px;margin-bottom:12px;">
+        <input class="inp" id="sched-match-inp" placeholder="Match # (e.g. Q14)" style="flex:1;">
+        <input class="inp" id="sched-team-inp" placeholder="Team #" style="width:90px;" type="number" inputmode="numeric">
+        <button class="btn P" style="width:auto;padding:11px 14px;font-size:0.82rem;flex-shrink:0;" onclick="addSchedItem()">Add</button>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <div class="sh" style="margin:0;">Schedule</div>
+        <div id="sched-progress-txt" style="font-size:0.7rem;color:var(--t3);font-family:'IBM Plex Mono',monospace;"></div>
+      </div>
+      <div id="sched-list"></div>
+    </div>
+
+    <!-- EXPORT TAB -->
+    <div id="view-export" class="view">
+      <div class="sh">Overview</div>
+      <div class="sg" id="export-stats"></div>
+      <div class="sh">Export</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <button class="btn S" onclick="exportJSON()">📦 Export JSON</button>
+        <button class="btn S" onclick="exportCSV()">📊 Export CSV</button>
+        <button class="btn S" onclick="copyText()">📋 Copy as Plain Text</button>
+      </div>
+      <div class="div"></div>
+      <div class="sh">Import</div>
+      <div class="s-sub" style="margin-bottom:8px;font-size:0.73rem;color:var(--t2);line-height:1.45;">Paste exported JSON below and tap Import. Duplicate notes are skipped.</div>
+      <textarea class="import-area" id="import-area" placeholder='Paste JSON here…'></textarea>
+      <div style="margin-top:8px;"><button class="btn S" onclick="importJSON()">📥 Import JSON</button></div>
+      <div class="div"></div>
+      <button class="btn D" onclick="clearAll()">🗑 Clear All Data</button>
+    </div>
+
+    <!-- SETTINGS TAB -->
+    <div id="view-settings" class="view">
+      <div class="sh">Scouter</div>
+      <div class="setting-group">
+        <div class="setting-row" style="padding-top:0;">
+          <div class="s-lbl">Your Name</div>
+          <div class="s-sub">Stamped on every note you save.</div>
+          <input class="inp" id="scouter-name-inp" placeholder="e.g. Brian Jones" oninput="saveScouterName()">
+        </div>
+      </div>
+
+      <div class="sh">App</div>
+      <div class="setting-group">
+        <div class="setting-row" style="padding-top:0;">
+          <div class="s-lbl">Version</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:0.8rem;color:var(--t2);">Vana 1.0 · Breakaway FRC 2026</div>
+        </div>
+        <div class="setting-row">
+          <div class="s-lbl">Storage</div>
+          <div id="storage-info" style="font-family:'IBM Plex Mono',monospace;font-size:0.78rem;color:var(--t2);"></div>
+          <div class="s-sub" style="margin-top:4px;margin-bottom:0;">Data saved in localStorage — persists across restarts. Only clearing Safari website data in iPhone Settings would erase it.</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /scroll -->
+
+  <div class="tabbar">
+    <div class="tabitem on" id="tab-teams" onclick="switchTab('teams')"><div class="ti">🗂️</div><div class="tl">Teams</div></div>
+    <div class="tabitem" id="tab-schedule" onclick="switchTab('schedule')"><div class="ti">📋</div><div class="tl">Schedule</div></div>
+    <div class="tabitem" id="tab-export" onclick="switchTab('export')"><div class="ti">⬆️</div><div class="tl">Export</div></div>
+    <div class="tabitem" id="tab-settings" onclick="switchTab('settings')"><div class="ti">⚙️</div><div class="tl">Settings</div></div>
+  </div>
+</div>
+
+<!-- DETAIL VIEW -->
+<div id="dv" class="dv">
+  <div class="safe-top"></div>
+  <div class="back-hdr">
+    <div class="back-btn" onclick="closeDetail()"><span class="back-a">‹</span><span class="back-t">All Teams</span></div>
+    <div style="flex:1;"></div>
+  </div>
+  <div class="ds" id="dc"></div>
+</div>
+
+<!-- ADD NOTE MODAL -->
+<div class="mo" id="add-modal" onclick="bgClose(event,'add-modal')">
+  <div class="mp">
+    <div class="mt">Add Note <span class="mc" onclick="closeM('add-modal')">✕</span></div>
+    <div style="display:flex;gap:8px;margin-bottom:12px;">
+      <div style="flex:1;"><div class="fl">Team #</div><input class="inp" id="m-team" type="number" placeholder="3937" inputmode="numeric"></div>
+      <div style="flex:1;"><div class="fl">Match #</div><input class="inp" id="m-match" placeholder="Q12 / Pit"></div>
+    </div>
+    <div class="fl" style="margin-bottom:7px;">Labels</div>
+    <div class="lw" id="m-labels" style="margin-bottom:14px;"></div>
+    <div class="fl" style="margin-bottom:5px;">Notes</div>
+    <textarea class="inp" id="m-note" placeholder="Write your observations…"></textarea>
+    <div style="margin-top:12px;"><button class="btn P" onclick="saveNote()">Save Note</button></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── LABELS ──────────────────────────────────
+var LABELS=[
+  {id:'dnp',text:'DNP',cls:'dnp'},
+  {id:'shuttler',text:'Shuttler',cls:'shuttler'},
+  {id:'defbot',text:'Defence Bot',cls:'defbot'},
+  {id:'unreliable',text:'Unreliable',cls:'unreliable'},
+  {id:'beachprone',text:'Beach Prone',cls:'beachprone'},
+  {id:'qdrivers',text:'Quality Drivers',cls:'qdrivers'},
+  {id:'fast',text:'Fast',cls:'fast'},
+  {id:'slow',text:'Slow',cls:'slow'},
+  {id:'highcycler',text:'High Cycler',cls:'highcycler'},
+  {id:'climber',text:'Climber',cls:'climber'},
+  {id:'penaltyprone',text:'Penalty Prone',cls:'penaltyprone'},
+  {id:'goodauto',text:'Good Auto',cls:'goodauto'},
+  {id:'noauto',text:'No Auto',cls:'noauto'},
+  {id:'weakauto',text:'Weak Auto',cls:'weakauto'},
+  {id:'fragile',text:'Fragile / Tipped',cls:'fragile'},
+  {id:'kitbot',text:'Kitbot',cls:'kitbot'},
+];
+
+// ── PERSISTENCE ─────────────────────────────
+function ld(k,d){try{var v=localStorage.getItem(k);return v!==null?JSON.parse(v):d;}catch(e){return d;}}
+function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+
+var notes    = ld('vana-notes',[]);
+var ratings  = ld('vana-ratings',{});   // {teamNum: 1-5}
+var schedule = ld('vana-sched',[]);     // [{id,match,team,done}]
+var scouterName = localStorage.getItem('vana-scouter')||'';
+
+function pn(){sv('vana-notes',notes);}
+function pr(){sv('vana-ratings',ratings);}
+function ps(){sv('vana-sched',schedule);}
+function saveScouterName(){scouterName=document.getElementById('scouter-name-inp').value.trim();localStorage.setItem('vana-scouter',scouterName);}
+
+// ── TABS ────────────────────────────────────
+function switchTab(name){
+  var vs=document.querySelectorAll('.view');for(var i=0;i<vs.length;i++)vs[i].classList.remove('on');
+  var ts=document.querySelectorAll('.tabitem');for(var i=0;i<ts.length;i++)ts[i].classList.remove('on');
+  var v=document.getElementById('view-'+name);if(v)v.classList.add('on');
+  var t=document.getElementById('tab-'+name);if(t)t.classList.add('on');
+  if(name==='export')renderExportStats();
+  if(name==='teams')renderTeams();
+  if(name==='schedule')renderSchedule();
+  if(name==='settings')renderSettings();
+  document.getElementById('main-scroll').scrollTop=0;
+}
+
+// ── ADD NOTE ────────────────────────────────
+var mLbls=[];
+function openAddModal(pre){
+  mLbls=[];renderMLbls();
+  document.getElementById('m-team').value=pre||'';
+  document.getElementById('m-match').value='';
+  document.getElementById('m-note').value='';
+  document.getElementById('add-modal').classList.add('on');
+  setTimeout(function(){(pre?document.getElementById('m-note'):document.getElementById('m-team')).focus();},300);
+}
+function renderMLbls(){
+  var h='';
+  for(var i=0;i<LABELS.length;i++){var l=LABELS[i],a=mLbls.indexOf(l.id)>=0;h+='<div class="lbl '+(a?'on '+l.cls:'off')+'" onclick="tLbl(\''+l.id+'\')">'+l.text+'</div>';}
+  document.getElementById('m-labels').innerHTML=h;
+}
+function tLbl(id){var i=mLbls.indexOf(id);if(i>=0)mLbls.splice(i,1);else mLbls.push(id);renderMLbls();}
+function saveNote(){
+  var team=document.getElementById('m-team').value.trim();
+  var match=document.getElementById('m-match').value.trim();
+  var text=document.getElementById('m-note').value.trim();
+  if(!team){toast('Enter a team number','err');return;}
+  notes.push({
+    id:Date.now(),team:team,match:match||'Pit',labels:mLbls.slice(),text:text,
+    scout:scouterName,
+    ts:new Date().toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})
+  });
+  pn();closeM('add-modal');renderTeams();
+  toast('Saved — Team '+team,'ok');
+  if(dNum===team)openDetail(team);
+}
+
+// ── STAR RATING ─────────────────────────────
+function starHTML(team,size){
+  var r=ratings[team]||0;
+  var h='<div class="stars" id="stars-'+team+'">';
+  for(var i=1;i<=5;i++){
+    h+='<span class="star'+(i<=r?' on':'')+'" onclick="setRating(\''+team+'\','+i+')" style="font-size:'+(size||'1.1rem')+';">'+(i<=r?'★':'☆')+'</span>';
+  }
+  h+='</div>';
+  return h;
+}
+function setRating(team,val){
+  // Toggle off if clicking current rating
+  if(ratings[team]===val) ratings[team]=0; else ratings[team]=val;
+  pr();
+  // Re-render star rows wherever they appear
+  var el=document.getElementById('stars-'+team);
+  if(el){
+    var r=ratings[team]||0;
+    var spans=el.querySelectorAll('.star');
+    for(var i=0;i<spans.length;i++){
+      var n=i+1;
+      spans[i].className='star'+(n<=r?' on':'');
+      spans[i].textContent=n<=r?'★':'☆';
+    }
+  }
+  renderTeams();
+}
+
+// ── TEAMS LIST ──────────────────────────────
+function renderTeams(){
+  var q=(document.getElementById('team-search').value||'').trim();
+  var el=document.getElementById('teams-list');
+  var seen={},nums=[];
+  for(var i=0;i<notes.length;i++){if(!seen[notes[i].team]){seen[notes[i].team]=true;nums.push(notes[i].team);}}
+  if(q){var f=[];for(var i=0;i<nums.length;i++){if(nums[i].indexOf(q)>=0)f.push(nums[i]);}nums=f;}
+  // Sort: by rating desc, then team number asc
+  nums.sort(function(a,b){
+    var ra=ratings[a]||0,rb=ratings[b]||0;
+    if(ra!==rb)return rb-ra;
+    return parseInt(a)-parseInt(b);
+  });
+  if(!nums.length){
+    el.innerHTML='<div class="empty"><div class="empty-i">🤖</div><div class="empty-t">'+(q?'No teams found':'No teams yet')+'</div><div class="empty-s">'+(q?'Try a different number':'Tap + to add your first note')+'</div></div>';
+    return;
+  }
+  var h='';
+  for(var i=0;i<nums.length;i++){
+    var num=nums[i],tn=[],lblSeen={},allL=[];
+    for(var j=0;j<notes.length;j++)if(notes[j].team===num)tn.push(notes[j]);
+    for(var j=0;j<tn.length;j++){var ls=tn[j].labels||[];for(var k=0;k<ls.length;k++){if(!lblSeen[ls[k]]){lblSeen[ls[k]]=true;allL.push(ls[k]);}}}
+    var mSeen={},mc=0;for(var j=0;j<tn.length;j++)if(!mSeen[tn[j].match]){mSeen[tn[j].match]=true;mc++;}
+    var lh='';for(var j=0;j<Math.min(3,allL.length);j++){for(var k=0;k<LABELS.length;k++){if(LABELS[k].id===allL[j]){lh+='<div class="lbl on '+LABELS[k].cls+'" style="font-size:0.58rem;padding:2px 7px;">'+LABELS[k].text+'</div>';break;}}}
+    var r=ratings[num]||0;
+    var starsStr='';for(var j=1;j<=5;j++)starsStr+=(j<=r?'★':'☆');
+    h+='<div class="team-row" onclick="openDetail(\''+num+'\')"><div class="nb">#'+num+'</div><div class="tr-info"><div class="tr-name">Team '+num+'</div><div class="tr-meta">'+tn.length+' note'+(tn.length>1?'s':'')+' &middot; '+mc+' match'+(mc>1?'es':'')+'</div>'+(r>0?'<div class="tr-stars" style="color:var(--acc);">'+starsStr+'</div>':'')+(lh?'<div style="display:flex;flex-wrap:wrap;gap:3px;margin-top:4px;">'+lh+'</div>':'')+'</div><div style="color:var(--t3);font-size:1rem;">&#8250;</div></div>';
+  }
+  el.innerHTML=h;
+}
+
+// ── DETAIL ──────────────────────────────────
+var dNum=null;
+function openDetail(num){
+  dNum=num;
+  var tn=[];for(var i=0;i<notes.length;i++)if(notes[i].team===num)tn.push(notes[i]);
+  tn.sort(function(a,b){return(parseInt((a.match||'').replace(/\D/g,''))||0)-(parseInt((b.match||'').replace(/\D/g,''))||0);});
+  var allL=[],lblSeen={};
+  for(var i=0;i<tn.length;i++){var ls=tn[i].labels||[];for(var j=0;j<ls.length;j++){if(!lblSeen[ls[j]]){lblSeen[ls[j]]=true;allL.push(ls[j]);}}}
+  var lh='';
+  if(allL.length){lh='<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px;">';for(var i=0;i<allL.length;i++){for(var j=0;j<LABELS.length;j++){if(LABELS[j].id===allL[i]){lh+='<div class="lbl on '+LABELS[j].cls+'">'+LABELS[j].text+'</div>';break;}}}lh+='</div>';}
+  var nHtml='';
+  for(var i=0;i<tn.length;i++){
+    var n=tn[i];
+    var nlh='<div class="note-lbls-edit" id="nlbls-'+n.id+'">';
+    for(var j=0;j<LABELS.length;j++){var active=(n.labels||[]).indexOf(LABELS[j].id)>=0;nlh+='<div class="lbl '+(active?'on '+LABELS[j].cls:'off')+'" style="font-size:0.6rem;padding:2px 8px;" onclick="toggleNoteLbl('+n.id+',\''+LABELS[j].id+'\')">'+LABELS[j].text+'</div>';}
+    nlh+='</div>';
+    nHtml+='<div class="note-entry">'
+      +'<div class="note-header">'
+      +'<input class="note-match-inp" id="nm-'+n.id+'" value="'+esc(n.match)+'" onblur="saveMatchEdit('+n.id+',this.value)">'
+      +(n.scout?'<span class="note-scout">'+esc(n.scout)+'</span>':'')
+      +'<span class="note-ts">'+esc(n.ts)+'</span>'
+      +'<button class="note-del" onclick="delNote('+n.id+',\''+num+'\')">Delete</button>'
+      +'</div>'
+      +nlh
+      +'<textarea class="note-body-inp" id="nb-'+n.id+'" onblur="saveBodyEdit('+n.id+',this.value)">'+esc(n.text)+'</textarea>'
+      +'<div class="note-save-row"><button class="note-save-btn" onclick="saveBodyEdit('+n.id+',document.getElementById(\'nb-'+n.id+'\').value)">Save</button></div>'
+      +'</div>';
+  }
+  if(!tn.length)nHtml='<div class="empty" style="padding:14px 0;"><div class="empty-s">No notes yet</div></div>';
+
+  document.getElementById('dc').innerHTML=
+    '<div style="margin-bottom:12px;">'
+    +'<div style="font-family:\'Bebas Neue\',sans-serif;font-size:2.4rem;color:var(--acc);line-height:1;text-shadow:0 0 24px var(--acc-glow);">'+num+'</div>'
+    +'<div style="font-size:0.9rem;font-weight:700;margin-top:2px;color:var(--t2);">Team '+num+'</div>'
+    +'</div>'
+    +'<div style="margin-bottom:14px;">'
+    +'<div class="fl" style="margin-bottom:6px;">Team Rating</div>'
+    +starHTML(num,'1.6rem')
+    +'</div>'
+    +lh
+    +'<button class="btn P sm" style="margin-bottom:16px;" onclick="openAddModal(\''+num+'\')">&#xff0b; Add Note</button>'
+    +'<div class="sh">Notes by Match — tap any field to edit</div>'
+    +nHtml;
+
+  document.getElementById('dv').classList.add('on');
+  document.getElementById('dc').scrollTop=0;
+}
+function closeDetail(){document.getElementById('dv').classList.remove('on');dNum=null;renderTeams();}
+
+// ── NOTE EDITING ────────────────────────────
+function saveMatchEdit(id,val){for(var i=0;i<notes.length;i++)if(notes[i].id===id){notes[i].match=val.trim()||'Pit';break;}pn();}
+function saveBodyEdit(id,val){for(var i=0;i<notes.length;i++)if(notes[i].id===id){notes[i].text=val;break;}pn();toast('Saved','ok');}
+function toggleNoteLbl(id,lid){
+  for(var i=0;i<notes.length;i++){
+    if(notes[i].id===id){
+      var lbls=notes[i].labels||[];var idx=lbls.indexOf(lid);
+      if(idx>=0)lbls.splice(idx,1);else lbls.push(lid);
+      notes[i].labels=lbls;
+      var el=document.getElementById('nlbls-'+id);
+      if(el){var h='';for(var j=0;j<LABELS.length;j++){var a=lbls.indexOf(LABELS[j].id)>=0;h+='<div class="lbl '+(a?'on '+LABELS[j].cls:'off')+'" style="font-size:0.6rem;padding:2px 8px;" onclick="toggleNoteLbl('+id+',\''+LABELS[j].id+'\')">'+LABELS[j].text+'</div>';}el.innerHTML=h;}
+      pn();break;
+    }
+  }
+}
+function delNote(id,num){
+  if(!confirm('Delete this note?'))return;
+  var n=[];for(var i=0;i<notes.length;i++)if(notes[i].id!==id)n.push(notes[i]);
+  notes=n;pn();toast('Deleted');openDetail(num);
+}
+
+// ── SCHEDULE ────────────────────────────────
+function addSchedItem(){
+  var match=document.getElementById('sched-match-inp').value.trim();
+  var team=document.getElementById('sched-team-inp').value.trim();
+  if(!match&&!team){toast('Enter a match or team number','err');return;}
+  schedule.push({id:Date.now(),match:match||'?',team:team||'',done:false});
+  ps();
+  document.getElementById('sched-match-inp').value='';
+  document.getElementById('sched-team-inp').value='';
+  renderSchedule();
+}
+function toggleSchedDone(id){
+  for(var i=0;i<schedule.length;i++)if(schedule[i].id===id){schedule[i].done=!schedule[i].done;break;}
+  ps();renderSchedule();
+}
+function delSchedItem(id){
+  var s=[];for(var i=0;i<schedule.length;i++)if(schedule[i].id!==id)s.push(schedule[i]);
+  schedule=s;ps();renderSchedule();
+}
+function renderSchedule(){
+  var el=document.getElementById('sched-list');
+  var done=0;for(var i=0;i<schedule.length;i++)if(schedule[i].done)done++;
+  var pct=schedule.length?Math.round(done/schedule.length*100):0;
+  document.getElementById('prog-fill').style.width=pct+'%';
+  document.getElementById('sched-progress-txt').textContent=schedule.length?done+' / '+schedule.length+' scouted':'';
+  if(!schedule.length){el.innerHTML='<div class="empty"><div class="empty-i">📋</div><div class="empty-t">No matches scheduled</div><div class="empty-s">Add matches above to track what you still need to scout</div></div>';return;}
+  // Sort: undone first, then done
+  var sorted=schedule.slice().sort(function(a,b){return a.done===b.done?0:a.done?1:-1;});
+  var h='';
+  for(var i=0;i<sorted.length;i++){
+    var s=sorted[i];
+    h+='<div class="sched-item">'
+      +'<div class="sched-check'+(s.done?' done':'')+'" onclick="toggleSchedDone('+s.id+')">'+(s.done?'✓':'')+'</div>'
+      +'<div class="sched-info">'
+      +'<div class="sched-match'+(s.done?' done-txt':'')+'">'+esc(s.match)+(s.team?' &mdash; Team '+esc(s.team):'')+'</div>'
+      +(s.done?'<div class="sched-team">Scouted</div>':s.team?'<div class="sched-team">Team '+esc(s.team)+'</div>':'')
+      +'</div>'
+      +'<button class="sched-del" onclick="delSchedItem('+s.id+')">✕</button>'
+      +'</div>';
+  }
+  el.innerHTML=h;
+}
+
+// ── EXPORT / IMPORT ─────────────────────────
+function renderExportStats(){
+  var ts={},ms={};for(var i=0;i<notes.length;i++){ts[notes[i].team]=true;ms[notes[i].match]=true;}
+  document.getElementById('export-stats').innerHTML=
+    '<div class="sbox"><div class="sv">'+notes.length+'</div><div class="sk">Notes</div></div>'
+    +'<div class="sbox"><div class="sv">'+Object.keys(ts).length+'</div><div class="sk">Teams</div></div>'
+    +'<div class="sbox"><div class="sv">'+Object.keys(ms).length+'</div><div class="sk">Matches</div></div>';
+}
+function dl(c,m,f){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([c],{type:m}));a.download=f;document.body.appendChild(a);a.click();document.body.removeChild(a);}
+function exportJSON(){
+  var payload={notes:notes,ratings:ratings,schedule:schedule,scouter:scouterName,exported:new Date().toISOString()};
+  dl(JSON.stringify(payload,null,2),'application/json','vana-export.json');
+  toast('Exported','ok');
+}
+function exportCSV(){
+  var rows=[['Team','Match','Scout','Labels','Notes','Rating','Timestamp'].join(',')];
+  var s=notes.slice().sort(function(a,b){return parseInt(a.team)-parseInt(b.team);});
+  for(var i=0;i<s.length;i++){
+    var n=s[i];
+    rows.push([n.team,n.match,'"'+(n.scout||'')+'"','"'+(n.labels||[]).join(';')+'"','"'+(n.text||'').replace(/"/g,'""')+'"',ratings[n.team]||'','"'+(n.ts||'')+'"'].join(','));
+  }
+  dl(rows.join('\n'),'text/csv','vana-export.csv');
+  toast('CSV exported','ok');
+}
+function importJSON(){
+  var raw=document.getElementById('import-area').value.trim();
+  if(!raw){toast('Paste JSON first','err');return;}
+  try{
+    var data=JSON.parse(raw);
+    // Support both raw array of notes and full payload object
+    var imported=Array.isArray(data)?data:(data.notes||[]);
+    var existingIds={};for(var i=0;i<notes.length;i++)existingIds[notes[i].id]=true;
+    var added=0;
+    for(var i=0;i<imported.length;i++){
+      if(!existingIds[imported[i].id]){notes.push(imported[i]);added++;}
+    }
+    // Merge ratings if present
+    if(data.ratings){for(var k in data.ratings){if(!ratings[k])ratings[k]=data.ratings[k];}}
+    pn();pr();renderTeams();
+    document.getElementById('import-area').value='';
+    toast('Imported '+added+' new note'+(added!==1?'s':''),'ok');
+  }catch(e){toast('Invalid JSON: '+e.message,'err');}
+}
+function copyText(){
+  var seen={},nums=[];for(var i=0;i<notes.length;i++)if(!seen[notes[i].team]){seen[notes[i].team]=true;nums.push(notes[i].team);}
+  nums.sort(function(a,b){return parseInt(a)-parseInt(b);});
+  var out='Vana Export — Breakaway FRC 2026\n\n';
+  for(var i=0;i<nums.length;i++){
+    var num=nums[i];var r=ratings[num]||0;var stars='';for(var j=1;j<=5;j++)stars+=(j<=r?'★':'☆');
+    out+='====== TEAM '+num+' '+stars+' ======\n';
+    var tn=[];for(var j=0;j<notes.length;j++)if(notes[j].team===num)tn.push(notes[j]);
+    tn.sort(function(a,b){return(parseInt((a.match||'').replace(/\D/g,''))||0)-(parseInt((b.match||'').replace(/\D/g,''))||0);});
+    for(var j=0;j<tn.length;j++){
+      var n=tn[j];out+='\n  ['+n.match+']'+(n.scout?' ('+n.scout+')':'');
+      if(n.labels&&n.labels.length)out+=' '+n.labels.join(', ');
+      if(n.text)out+='\n  '+n.text;out+='\n';
+    }
+    out+='\n';
+  }
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(out.trim()).then(function(){toast('Copied','ok');}).catch(function(){fbCopy(out);});
+  }else fbCopy(out);
+}
+function fbCopy(t){var ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;opacity:0;';document.body.appendChild(ta);ta.focus();ta.select();try{document.execCommand('copy');toast('Copied','ok');}catch(e){toast('Copy failed','err');}document.body.removeChild(ta);}
+function clearAll(){if(!confirm('Delete ALL notes, ratings and schedule?'))return;notes=[];ratings={};schedule=[];pn();pr();ps();renderTeams();renderExportStats();renderSchedule();toast('Cleared');}
+
+// ── SETTINGS ────────────────────────────────
+function renderSettings(){
+  document.getElementById('scouter-name-inp').value=scouterName;
+  var sz=0;try{sz=new Blob([localStorage.getItem('vana-notes')||'']).size;}catch(e){}
+  document.getElementById('storage-info').textContent='~'+(sz/1024).toFixed(1)+' KB used';
+}
+
+// ── UTILS ───────────────────────────────────
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function toast(msg,type){var el=document.getElementById('toast');el.textContent=msg;el.className='toast show'+(type?' '+type:'');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('show');},2600);}
+function closeM(id){document.getElementById(id).classList.remove('on');}
+function bgClose(e,id){if(e.target===document.getElementById(id))closeM(id);}
+
+// ── BOOT ────────────────────────────────────
+renderTeams();
+</script>
+</body>
+</html>

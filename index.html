@@ -9,7 +9,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 :root{
-  --bg:#0e0f11;--s1:#141518;--s2:#1b1d21;--s3:#22252a;--s4:#2a2d33;
+  --bg:#080909;--s1:#0e0f10;--s2:#141516;--s3:#1a1b1d;--s4:#202124;
   --border:#2e3138;--border2:#383c45;
   --red:#ef4444;--red-dim:rgba(239,68,68,0.12);--red-border:rgba(239,68,68,0.25);
   --blue:#3b82f6;--blue-dim:rgba(59,130,246,0.12);--blue-border:rgba(59,130,246,0.25);
@@ -21,8 +21,6 @@
 html,body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;height:100%;overflow:hidden;-webkit-font-smoothing:antialiased;}
 .app{display:flex;flex-direction:column;height:100dvh;max-width:430px;margin:0 auto;overflow:hidden;}
 .safe-top{height:var(--safe-t);background:var(--bg);flex-shrink:0;}
-
-/* ── TOPBAR ── */
 .topbar{display:flex;align-items:center;padding:10px 16px;gap:10px;flex-shrink:0;border-bottom:1px solid var(--border);background:var(--bg);}
 .logo{font-family:'Orbitron',sans-serif;font-size:1.15rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#ffffff;line-height:1;flex-shrink:0;} .logo .logo-v{color:var(--red);}
 .logo-sub{font-size:0.62rem;color:var(--t3);font-family:JetBrains Mono,monospace;flex:1;letter-spacing:0.04em;}
@@ -30,34 +28,22 @@ html,body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;
 .scouter-badge:active{background:var(--s3);}
 .iBtn{background:var(--s2);border:1px solid var(--border);color:var(--t2);width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.95rem;flex-shrink:0;-webkit-user-select:none;transition:all 0.1s;}
 .iBtn:active{background:var(--s3);transform:scale(0.91);}
-
-/* ── SCROLL + VIEWS ── */
 .scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;}
 .view{display:none;padding:14px 16px;}
 .view.on{display:block;}
-
-/* ── TABBAR ── */
-.tabbar{flex-shrink:0;display:flex;background:rgba(14,15,17,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);padding-top:8px;padding-bottom:var(--safe-b);}
+.tabbar{flex-shrink:0;display:flex;background:rgba(8,9,9,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);padding-top:8px;padding-bottom:var(--safe-b);}
 .tabitem{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:2px 0 4px;-webkit-user-select:none;}
 .tabitem .ti{font-size:1.1rem;line-height:1;transition:transform 0.12s;}
 .tabitem:active .ti{transform:scale(0.82);}
 .tabitem .tl{font-size:0.58rem;font-weight:600;letter-spacing:0.04em;color:var(--t3);}
 .tabitem.on .tl{color:var(--text);}
 .tabitem:not(.on) .ti{filter:grayscale(1) opacity(0.25);}
-
-/* ── INPUTS ── */
 .inp{width:100%;background:var(--s2);border:1.5px solid var(--border);border-radius:10px;padding:10px 13px;font-family:'Inter',sans-serif;font-size:0.9rem;color:var(--text);outline:none;-webkit-appearance:none;transition:border-color 0.15s;}
 .inp:focus{border-color:var(--text);}
 .inp::placeholder{color:var(--t3);}
 textarea.inp{resize:none;line-height:1.6;}
-
-/* ── SECTION HEADING ── */
 .sh{font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--t3);margin-bottom:8px;margin-top:2px;}
-
-/* ── DIVIDER ── */
 .div{height:1px;background:var(--border);margin:14px 0;}
-
-/* ── BUTTONS ── */
 .btn{width:100%;padding:12px;border:none;border-radius:10px;font-family:'Inter',sans-serif;font-weight:700;font-size:0.88rem;cursor:pointer;-webkit-user-select:none;display:flex;align-items:center;justify-content:center;gap:7px;transition:all 0.1s;}
 .btn:active{transform:scale(0.97);}
 .btn.P{background:var(--text);color:var(--bg);}
@@ -65,25 +51,17 @@ textarea.inp{resize:none;line-height:1.6;}
 .btn.S{background:var(--s2);border:1px solid var(--border2);color:var(--text);}
 .btn.S:active{background:var(--s3);}
 .btn.D{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);color:var(--red);}
-.btn.red-full{background:var(--red);color:#fff;}
-.btn.blue-full{background:var(--blue);color:#fff;}
 .sm{padding:8px 12px;font-size:0.8rem;width:auto;}
-
-/* ── EMPTY ── */
 .empty{text-align:center;padding:40px 20px;color:var(--t3);}
 .empty-i{font-size:2rem;margin-bottom:10px;}
 .empty-t{font-weight:700;font-size:0.88rem;color:var(--t2);margin-bottom:4px;}
 .empty-s{font-size:0.76rem;line-height:1.5;}
-
-/* ── MODAL ── */
 .mo{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:800;display:none;align-items:flex-end;}
 .mo.on{display:flex;}
 .mp{background:var(--s1);border:1px solid var(--border);border-top-left-radius:20px;border-top-right-radius:20px;padding:18px 18px calc(20px + var(--safe-b));width:100%;max-height:92dvh;overflow-y:auto;-webkit-overflow-scrolling:touch;}
-.mt{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.08em;margin-bottom:14px;color:var(--t2);display:flex;justify-content:space-between;align-items:center;}
+.mt{font-size:1.1rem;font-weight:700;letter-spacing:0.04em;margin-bottom:14px;color:var(--t2);display:flex;justify-content:space-between;align-items:center;}
 .mc{background:var(--s3);border:1px solid var(--border);color:var(--t2);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.78rem;flex-shrink:0;}
 .fl{font-size:0.65rem;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:5px;}
-
-/* ── DETAIL ── */
 .dv{display:none;position:fixed;inset:0;background:var(--bg);z-index:300;max-width:430px;margin:0 auto;flex-direction:column;}
 .dv.on{display:flex;}
 .ds{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px 16px 40px;}
@@ -91,9 +69,7 @@ textarea.inp{resize:none;line-height:1.6;}
 .back-btn{display:flex;align-items:center;gap:5px;cursor:pointer;-webkit-user-select:none;}
 .back-btn:active{opacity:0.6;}
 .back-a{font-size:1.1rem;color:var(--t2);}
-.back-t{font-family:'Bebas Neue',sans-serif;font-size:0.95rem;letter-spacing:0.06em;color:var(--t3);}
-
-/* ── MATCH CARD ── */
+.back-t{font-size:0.95rem;font-weight:700;letter-spacing:0.04em;color:var(--t3);}
 .match-card{background:var(--s1);border:1px solid var(--border);border-radius:14px;margin-bottom:10px;overflow:hidden;}
 .match-card-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--border);background:var(--s2);}
 .match-label{font-family:JetBrains Mono,monospace;font-weight:500;font-size:0.82rem;color:var(--text);}
@@ -102,46 +78,30 @@ textarea.inp{resize:none;line-height:1.6;}
 .match-status.pending{background:var(--s3);color:var(--t3);border:1px solid var(--border);}
 .match-del{background:none;border:none;color:var(--t3);cursor:pointer;font-size:0.85rem;padding:2px 4px;}
 .match-del:active{color:var(--red);}
-
-/* Alliance rows */
-.alliance-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;padding:10px 12px;}
-.alliance-row.red-row{border-bottom:1px solid var(--border);}
-.alliance-label{font-size:0.58rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0 12px 5px;padding-top:8px;}
+.alliance-label{font-size:0.58rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:8px 12px 4px;}
 .alliance-label.red{color:var(--red);}
 .alliance-label.blue{color:var(--blue);}
-
-/* Team chip in match */
-.team-chip{border-radius:9px;padding:10px 6px;text-align:center;cursor:pointer;-webkit-user-select:none;transition:all 0.1s;position:relative;border:1.5px solid transparent;}
+.team-chip{border-radius:9px;cursor:pointer;-webkit-user-select:none;transition:all 0.1s;border:1.5px solid transparent;}
 .team-chip:active{transform:scale(0.95);}
 .team-chip.red-chip{background:var(--red-dim);border-color:var(--red-border);}
 .team-chip.blue-chip{background:var(--blue-dim);border-color:var(--blue-border);}
-.team-chip.red-chip.has-note{border-color:var(--red);box-shadow:0 0 0 1px rgba(239,68,68,0.2);}
-.team-chip.blue-chip.has-note{border-color:var(--blue);box-shadow:0 0 0 1px rgba(59,130,246,0.2);}
+.team-chip.red-chip.has-note{border-color:var(--red);}
+.team-chip.blue-chip.has-note{border-color:var(--blue);}
 .chip-num{font-family:JetBrains Mono,monospace;font-weight:500;font-size:0.85rem;line-height:1;}
 .chip-num.red{color:var(--red);}
 .chip-num.blue{color:var(--blue);}
-.chip-name{font-size:0.6rem;color:var(--t2);margin-top:3px;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.chip-dot{width:5px;height:5px;border-radius:50%;margin:4px auto 0;background:var(--t4);}
-.chip-dot.red{background:var(--red);}
-.chip-dot.blue{background:var(--blue);}
-.chip-rating{font-size:0.65rem;margin-top:3px;letter-spacing:0.5px;}
-
-/* ── NOTE MODAL SPECIFICS ── */
+.chip-name{font-size:0.6rem;color:var(--t2);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .note-alliance-banner{border-radius:8px;padding:8px 12px;margin-bottom:14px;font-size:0.78rem;font-weight:600;display:flex;align-items:center;gap:8px;}
 .note-alliance-banner.red{background:var(--red-dim);border:1px solid var(--red-border);color:var(--red);}
 .note-alliance-banner.blue{background:var(--blue-dim);border:1px solid var(--blue-border);color:var(--blue);}
-
-/* Star rating in modal */
 .star-row{display:flex;gap:8px;margin:4px 0 2px;}
 .star-btn{font-size:1.6rem;cursor:pointer;-webkit-user-select:none;line-height:1;transition:transform 0.1s;}
 .star-btn:active{transform:scale(0.85);}
-
-/* ── LABELS ── */
 .lw{display:flex;flex-wrap:wrap;gap:5px;}
 .lbl{padding:5px 10px;border-radius:100px;font-size:0.68rem;font-weight:600;cursor:pointer;border:1.5px solid transparent;-webkit-user-select:none;white-space:nowrap;transition:all 0.1s;}
 .lbl:active{transform:scale(0.93);}
 .lbl.off{background:var(--s3);border-color:var(--border2);color:var(--t2);}
-.lbl.on.dnp{background:rgba(239,68,68,0.15);border-color:var(--red);color:var(--red);}
+.lbl.on.dnp{background:rgba(239,68,68,0.18);border-color:var(--red);color:var(--red);}
 .lbl.on.defbot{background:rgba(249,115,22,0.15);border-color:#f97316;color:#f97316;}
 .lbl.on.unreliable{background:rgba(239,68,68,0.1);border-color:#f87171;color:#f87171;}
 .lbl.on.beachprone{background:rgba(168,85,247,0.15);border-color:#a855f7;color:#a855f7;}
@@ -157,8 +117,7 @@ textarea.inp{resize:none;line-height:1.6;}
 .lbl.on.fragile{background:rgba(168,85,247,0.15);border-color:#a855f7;color:#a855f7;}
 .lbl.on.kitbot{background:rgba(250,204,21,0.12);border-color:#facc15;color:#facc15;}
 .lbl.on.shuttler{background:rgba(59,130,246,0.15);border-color:#3b82f6;color:#3b82f6;}
-
-/* ── TEAM LIST (Teams tab) ── */
+.lbl.on.mustpick{background:rgba(34,197,94,0.2);border-color:#22c55e;color:#22c55e;}
 .team-row{display:flex;align-items:center;gap:10px;padding:11px 13px;background:var(--s1);border:1px solid var(--border);border-radius:12px;margin-bottom:7px;cursor:pointer;-webkit-user-select:none;}
 .team-row:active{background:var(--s2);}
 .team-num{font-family:JetBrains Mono,monospace;font-size:0.88rem;font-weight:500;background:var(--s3);border:1px solid var(--border2);border-radius:7px;padding:5px 9px;color:var(--text);min-width:52px;text-align:center;flex-shrink:0;}
@@ -166,13 +125,9 @@ textarea.inp{resize:none;line-height:1.6;}
 .team-name-txt{font-weight:600;font-size:0.87rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .team-meta{font-size:0.7rem;color:var(--t2);margin-top:2px;}
 .team-stars-txt{font-size:0.72rem;letter-spacing:1px;margin-top:2px;}
-
-/* ── TEAM DETAIL ── */
 .team-detail-rating{display:flex;gap:10px;align-items:center;margin-bottom:16px;}
 .big-star{font-size:2rem;cursor:pointer;-webkit-user-select:none;line-height:1;}
 .big-star:active{transform:scale(0.85);}
-
-/* Note entry in team detail */
 .note-card{background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px;}
 .note-card-header{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
 .note-match-tag{font-family:JetBrains Mono,monospace;font-size:0.68rem;background:var(--s3);border:1px solid var(--border2);border-radius:5px;padding:2px 7px;color:var(--t2);}
@@ -184,56 +139,15 @@ textarea.inp{resize:none;line-height:1.6;}
 .note-body{font-size:0.84rem;line-height:1.6;color:var(--text);white-space:pre-wrap;word-break:break-word;}
 .note-lbl-row{display:flex;flex-wrap:wrap;gap:3px;margin-top:7px;}
 .note-mini-lbl{font-size:0.62rem;font-weight:600;padding:2px 7px;border-radius:100px;border:1px solid var(--border2);color:var(--t2);background:var(--s3);}
-
-/* ── STATS ── */
 .sg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;}
 .sbox{background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center;}
-.sv{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--text);line-height:1;}
+.sv{font-size:1.5rem;font-weight:700;color:var(--text);line-height:1;}
 .sk{font-size:0.58rem;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:0.08em;margin-top:3px;}
-
-/* ── SEARCH ── */
 .sw{position:relative;margin-bottom:10px;}
 .sw .inp{padding-left:33px;}
 .si{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--t3);font-size:0.85rem;pointer-events:none;}
-
-/* ── IMPORT AREA ── */
 .import-area{width:100%;background:var(--s2);border:1.5px dashed var(--border2);border-radius:10px;padding:12px;font-family:JetBrains Mono,monospace;font-size:0.75rem;color:var(--t2);min-height:80px;outline:none;resize:none;line-height:1.5;-webkit-appearance:none;}
 .import-area:focus{border-color:var(--text);}
-
-/* ── BACKEND STUB INDICATOR ── */
-/* These comments appear in JS — this class is just for visual stubs in the UI */
-.stub-indicator{background:rgba(250,204,21,0.08);border:1px dashed rgba(250,204,21,0.25);border-radius:8px;padding:8px 12px;font-size:0.72rem;color:rgba(250,204,21,0.6);font-family:JetBrains Mono,monospace;margin-bottom:10px;}
-
-
-/* ── STATS ── */
-.stat-section{margin-bottom:20px;}
-.stat-section-title{font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--t3);margin-bottom:10px;}
-.stat-card-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
-.stat-card{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;}
-.stat-card-val{font-family:'Rajdhani',sans-serif;font-size:2rem;font-weight:700;line-height:1;color:var(--text);}
-.stat-card-val.red{color:var(--red);}
-.stat-card-val.blue{color:var(--blue);}
-.stat-card-val.green{color:var(--green);}
-.stat-card-val.yellow{color:var(--yellow);}
-.stat-card-key{font-size:0.62rem;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:0.08em;margin-top:4px;}
-.team-stat-row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--s1);border:1px solid var(--border);border-radius:10px;margin-bottom:6px;}
-.team-stat-num{font-family:JetBrains Mono,monospace;font-size:0.82rem;color:var(--text);background:var(--s3);border:1px solid var(--border2);border-radius:6px;padding:4px 8px;flex-shrink:0;min-width:50px;text-align:center;}
-.team-stat-info{flex:1;min-width:0;}
-.team-stat-name{font-size:0.84rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.team-stat-sub{font-size:0.68rem;color:var(--t2);margin-top:2px;font-family:JetBrains Mono,monospace;}
-.team-stat-right{text-align:right;flex-shrink:0;}
-.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
-.bar-label{font-size:0.72rem;font-weight:600;color:var(--t2);width:100px;flex-shrink:0;text-align:right;}
-.bar-wrap{flex:1;height:6px;background:var(--s3);border-radius:3px;overflow:hidden;}
-.bar-fill{height:6px;border-radius:3px;transition:width 0.4s;}
-.bar-count{font-size:0.7rem;color:var(--t3);font-family:JetBrains Mono,monospace;flex-shrink:0;width:24px;}
-.epa-rank-row{display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--s1);border:1px solid var(--border);border-radius:10px;margin-bottom:5px;}
-.epa-rank-pos{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;color:var(--t3);width:28px;text-align:center;flex-shrink:0;}
-.epa-rank-pos.top{color:var(--yellow);}
-.epa-val{font-family:JetBrains Mono,monospace;font-size:0.78rem;color:var(--green);flex-shrink:0;}
-.rank-val{font-family:JetBrains Mono,monospace;font-size:0.72rem;color:var(--blue);flex-shrink:0;}
-.stub-pill{display:inline-flex;align-items:center;gap:5px;background:rgba(250,204,21,0.08);border:1px dashed rgba(250,204,21,0.2);border-radius:6px;padding:4px 10px;font-size:0.68rem;color:rgba(250,204,21,0.5);font-family:JetBrains Mono,monospace;margin-bottom:10px;}
-/* ── TOAST ── */
 .toast{position:fixed;bottom:calc(66px + var(--safe-b));left:50%;transform:translateX(-50%) translateY(10px);background:var(--s2);border:1px solid var(--border2);color:var(--text);padding:8px 18px;border-radius:100px;font-size:0.78rem;font-weight:600;opacity:0;transition:all 0.2s;pointer-events:none;white-space:nowrap;z-index:9999;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 .toast.ok{border-color:var(--green);color:var(--green);}
@@ -246,57 +160,36 @@ textarea.inp{resize:none;line-height:1.6;}
   <div class="safe-top"></div>
   <div class="topbar">
     <div class="logo"><span class="logo-v">V</span>antage</div>
-    <div class="logo-sub">Breakaway · FRC 2026</div>
+    <div class="logo-sub">by 3937</div>
     <div class="scouter-badge" id="scouter-badge" onclick="switchTab('settings')">👤 —</div>
     <div class="iBtn" onclick="openAddMatchModal()">＋</div>
   </div>
-
   <div class="scroll" id="main-scroll">
 
-    <!-- ── MATCHES TAB ── -->
+    <!-- MATCHES -->
     <div id="view-matches" class="view on">
       <div style="display:flex;gap:8px;margin-bottom:12px;">
         <button class="btn S" style="font-size:0.78rem;padding:9px;" onclick="openAddMatchModal()">＋ Add Match</button>
-        <button class="btn S" style="font-size:0.78rem;padding:9px;" onclick="pullSchedule()">⬇ Pull Schedule</button>
       </div>
       <div id="matches-list"></div>
     </div>
 
-    <!-- ── TEAMS TAB ── -->
+    <!-- TEAMS -->
     <div id="view-teams" class="view">
-      <div class="sw">
-        <span class="si">🔍</span>
-        <input class="inp" id="team-search" style="padding-left:33px;" type="search" placeholder="Search by team number…" oninput="renderTeams()">
-      </div>
-      <div class="stub-indicator">🔌 Team names pulled via <strong>api.js → getTeamName(number)</strong></div>
+      <div class="sw"><span class="si">🔍</span><input class="inp" id="team-search" style="padding-left:33px;" type="search" placeholder="Search by team number…" oninput="renderTeams()"></div>
       <div id="teams-list"></div>
     </div>
 
-
-    <!-- ── STATS TAB ── -->
+    <!-- STATS -->
     <div id="view-stats" class="view">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
         <div class="sh" style="margin:0;">Team Stats</div>
         <button class="btn S sm" id="refresh-btn" onclick="refreshAllStats()">↻ Refresh</button>
       </div>
-      <div id="api-test" style="background:var(--s1);border:1px dashed var(--border2);border-radius:10px;padding:12px;margin-bottom:12px;">
-        <div class="fl" style="margin-bottom:8px;">API Test</div>
-        <div style="display:flex;gap:8px;margin-bottom:8px;">
-          <input class="inp" id="test-team" placeholder="Team #" type="number" inputmode="numeric" style="width:90px;flex-shrink:0;">
-          <input class="inp" id="test-event" placeholder="Event key" style="flex:1;">
-        </div>
-        <button class="btn S sm" style="width:100%;margin-bottom:8px;" onclick="runAPITest()">▶ Test getData()</button>
-        <div id="test-output" style="font-family:JetBrains Mono,monospace;font-size:0.72rem;color:var(--t2);line-height:1.7;word-break:break-all;min-height:40px;"></div>
-      </div>
       <div id="stats-content"></div>
-      <div id="debug-log" style="margin-top:16px;background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:12px;display:none;">
-        <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--t3);margin-bottom:8px;">Debug Log</div>
-        <div id="debug-entries" style="font-family:JetBrains Mono,monospace;font-size:0.72rem;color:var(--t2);line-height:1.8;white-space:pre-wrap;word-break:break-all;max-height:300px;overflow-y:auto;"></div>
-        <button class="btn S sm" style="margin-top:8px;" onclick="clearDebug()">Clear</button>
-      </div>
     </div>
 
-    <!-- ── EXPORT TAB ── -->
+    <!-- EXPORT -->
     <div id="view-export" class="view">
       <div class="sh">Overview</div>
       <div class="sg" id="export-stats"></div>
@@ -308,14 +201,13 @@ textarea.inp{resize:none;line-height:1.6;}
       </div>
       <div class="div"></div>
       <div class="sh">Import</div>
-      <div class="stub-indicator">Paste a Vana JSON export below to merge notes in.</div>
       <textarea class="import-area" id="import-area" placeholder="Paste JSON here…"></textarea>
       <div style="margin-top:8px;"><button class="btn S" onclick="importJSON()">📥 Import</button></div>
       <div class="div"></div>
       <button class="btn D" onclick="clearAll()">🗑 Clear All Data</button>
     </div>
 
-    <!-- ── SETTINGS TAB ── -->
+    <!-- SETTINGS -->
     <div id="view-settings" class="view">
       <div class="sh">Scouter</div>
       <div style="background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:12px;">
@@ -323,56 +215,43 @@ textarea.inp{resize:none;line-height:1.6;}
         <input class="inp" id="scouter-inp" placeholder="e.g. Brian Jones" oninput="saveScouterName()">
         <div style="font-size:0.72rem;color:var(--t3);margin-top:8px;line-height:1.5;">Stamped on every note you save.</div>
       </div>
-
       <div class="sh">Regional</div>
       <div style="background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:12px;">
         <div class="fl" style="margin-bottom:6px;">Event Key</div>
-        <input class="inp" id="event-key-inp" placeholder="e.g. 2026casd" oninput="saveEventKey()" style="font-family:'JetBrains Mono',monospace;">
-        <div style="font-size:0.72rem;color:var(--t3);margin-top:8px;line-height:1.6;">Used for schedule pulls and team stats. Find your event key at <strong style="color:var(--t2);">thebluealliance.com</strong> — it looks like <strong style="color:var(--t2);">2026[statecode][eventname]</strong>, e.g. <strong style="color:var(--t2);">2026onwin</strong>.</div>
-        <div id="event-key-status" style="font-size:0.7rem;margin-top:6px;font-family:'JetBrains Mono',monospace;color:var(--t3);"></div>
+        <input class="inp" id="event-key-inp" placeholder="e.g. 2026casd" oninput="saveEventKey()" style="font-family:JetBrains Mono,monospace;">
+        <div style="font-size:0.72rem;color:var(--t3);margin-top:8px;line-height:1.6;">Find your event key at <strong style="color:var(--t2);">thebluealliance.com</strong> — e.g. <strong style="color:var(--t2);">2026onwin</strong>.</div>
+        <div id="event-key-status" style="font-size:0.7rem;margin-top:6px;font-family:JetBrains Mono,monospace;color:var(--t3);"></div>
       </div>
-
-      <div class="sh">Backend</div>
+      <div class="sh">Data</div>
       <div style="background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:12px;">
-        <div class="stub-indicator" style="margin-bottom:0;">
-          Wire up <strong>api.js</strong> to connect your backend.<br>
-          Functions: getTeamName(), pullEventSchedule(), getTeamEPA()
-        </div>
+        <button class="btn D" onclick="clearAll()">🗑 Clear All Data</button>
+        <div style="font-size:0.7rem;color:var(--t3);margin-top:8px;line-height:1.5;">Permanently deletes all notes, matches and ratings. Cannot be undone.</div>
+        <div style="font-size:0.7rem;color:var(--t3);margin-top:4px;font-family:JetBrains Mono,monospace;" id="storage-info"></div>
       </div>
-
       <div class="sh">App</div>
       <div style="background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:14px;">
-        <div style="font-size:0.78rem;color:var(--t2);line-height:1.6;">
-          <strong style="color:var(--text);">Vantage 2.0</strong> · Breakaway FRC 2026<br>
-          Data saved in localStorage — permanent across restarts.<br>
-          <span id="storage-info" style="color:var(--t3);"></span>
-        </div>
+        <div style="font-size:0.78rem;color:var(--t2);line-height:1.6;"><strong style="color:var(--text);">Vantage 2.0</strong> · by 3937 · Breakaway FRC 2026<br>Data saved permanently in localStorage.</div>
       </div>
     </div>
 
-  </div><!-- /scroll -->
-
+  </div>
   <div class="tabbar">
     <div class="tabitem on" id="tab-matches" onclick="switchTab('matches')"><div class="ti">⚡</div><div class="tl">Matches</div></div>
     <div class="tabitem" id="tab-teams" onclick="switchTab('teams')"><div class="ti">🗂️</div><div class="tl">Teams</div></div>
-    <div class="tabitem" id="tab-export" onclick="switchTab('export')"><div class="ti">⬆️</div><div class="tl">Export</div></div>
     <div class="tabitem" id="tab-stats" onclick="switchTab('stats')"><div class="ti">📊</div><div class="tl">Stats</div></div>
+    <div class="tabitem" id="tab-export" onclick="switchTab('export')"><div class="ti">⬆️</div><div class="tl">Export</div></div>
     <div class="tabitem" id="tab-settings" onclick="switchTab('settings')"><div class="ti">⚙️</div><div class="tl">Settings</div></div>
   </div>
 </div>
 
-<!-- ── TEAM DETAIL VIEW ── -->
+<!-- TEAM DETAIL -->
 <div id="dv" class="dv">
   <div class="safe-top"></div>
-  <div class="back-hdr">
-    <div class="back-btn" onclick="closeDetail()"><span class="back-a">‹</span><span class="back-t">Teams</span></div>
-    <div style="flex:1;"></div>
-    <div id="detail-header-extra"></div>
-  </div>
+  <div class="back-hdr"><div class="back-btn" onclick="closeDetail()"><span class="back-a">‹</span><span class="back-t">Teams</span></div></div>
   <div class="ds" id="dc"></div>
 </div>
 
-<!-- ── ADD MATCH MODAL ── -->
+<!-- ADD MATCH MODAL -->
 <div class="mo" id="match-modal" onclick="bgClose(event,'match-modal')">
   <div class="mp">
     <div class="mt">Add Match <span class="mc" onclick="closeM('match-modal')">✕</span></div>
@@ -396,7 +275,7 @@ textarea.inp{resize:none;line-height:1.6;}
   </div>
 </div>
 
-<!-- ── NOTE MODAL (tap a team in a match) ── -->
+<!-- NOTE MODAL -->
 <div class="mo" id="note-modal" onclick="bgClose(event,'note-modal')">
   <div class="mp">
     <div class="mt" id="note-modal-title">Note <span class="mc" onclick="closeM('note-modal')">✕</span></div>
@@ -413,133 +292,42 @@ textarea.inp{resize:none;line-height:1.6;}
 </div>
 
 <div class="toast" id="toast"></div>
-
 <script src="api.js"></script>
 <script>
-// ═══════════════════════════════════════════════
-// api.js STUBS — wire these up to your backend
-// ═══════════════════════════════════════════════
-
-// 🔌 BACKEND: Return team nickname string for a given team number
-// Replace fetch URL with your backend or Statbotics/TBA call
-async function getTeamName(number) {
-  // ── YOUR CODE HERE ──
-  // Example with Statbotics:
-  // const res = await fetch(`https://api.statbotics.io/v3/team/${number}`);
-  // const d = await res.json(); return d.name;
-  //
-  // Example with TBA:
-  // const res = await fetch(`https://www.thebluealliance.com/api/v3/team/frc${number}/simple`, { headers: { 'X-TBA-Auth-Key': YOUR_KEY } });
-  // const d = await res.json(); return d.nickname;
-  return null; // returning null falls back to "Team {number}"
-}
-
-// 🔌 BACKEND: Pull event match schedule and return array of match objects
-// Shape: [{match:'Q1', red:['1','2','3'], blue:['4','5','6']}, ...]
-async function pullEventSchedule(eventKey) {
-  // ── YOUR CODE HERE ──
-  // Example with TBA:
-  // const res = await fetch(`https://www.thebluealliance.com/api/v3/event/${eventKey}/matches/simple`, { headers: { 'X-TBA-Auth-Key': YOUR_KEY } });
-  // const d = await res.json();
-  // return d.map(m => ({ match: m.comp_level.toUpperCase()+m.match_number, red: m.alliances.red.team_keys.map(t=>t.replace('frc','')), blue: m.alliances.blue.team_keys.map(t=>t.replace('frc','')) }));
-  return null;
-}
-
-// ── REAL IMPLEMENTATION ──
-const statboticsApi = 'https://api.statbotics.io/v3';
-
-async function getTeamStats(number, eventKey) {
-  if(!eventKey) return null;
-  try {
-    dbg('calling getData('+number+', '+eventKey+')');
-    var stats = await getData(number, eventKey);
-    dbg('Team '+number+': '+(stats?JSON.stringify(stats):'null'));
-    if(!stats) return null;
-    // Cache EPA
-    if(stats.epa != null){
-      var epaCache=ld('vana2-epa',{});
-      epaCache[String(number)]=Math.round(stats.epa*10)/10;
-      sv('vana2-epa',epaCache);
-    }
-    // Cache rank
-    if(stats.rank != null){
-      var rankCache=ld('vana2-rank',{});
-      rankCache[String(number)]=stats.rank;
-      sv('vana2-rank',rankCache);
-    }
-    // Cache name
-    if(stats.name && !teamNames[String(number)]){
-      teamNames[String(number)]=stats.name;
-      pNm();
-    }
-    return stats;
-  } catch(e){
-    dbg('getTeamStats error: '+e.message);
-    return null;
-  }
-}
-
-// ═══════════════════════════════════════════════
-// LABELS
-// ═══════════════════════════════════════════════
 var LABELS = [
-  {id:'dnp',        text:'DNP',            cls:'dnp'},
-  {id:'defbot',     text:'Defence Bot',    cls:'defbot'},
-  {id:'unreliable', text:'Unreliable',     cls:'unreliable'},
-  {id:'beachprone', text:'Beach Prone',    cls:'beachprone'},
-  {id:'qdrivers',   text:'Quality Drivers',cls:'qdrivers'},
-  {id:'fast',       text:'Fast',           cls:'fast'},
-  {id:'slow',       text:'Slow',           cls:'slow'},
-  {id:'highcycler', text:'High Cycler',    cls:'highcycler'},
-  {id:'climber',    text:'Climber',        cls:'climber'},
-  {id:'penaltyprone',text:'Penalty Prone', cls:'penaltyprone'},
-  {id:'goodauto',   text:'Good Auto',      cls:'goodauto'},
-  {id:'noauto',     text:'No Auto',        cls:'noauto'},
-  {id:'weakauto',   text:'Weak Auto',      cls:'weakauto'},
-  {id:'fragile',    text:'Fragile/Tipped', cls:'fragile'},
-  {id:'kitbot',     text:'Kitbot',         cls:'kitbot'},
-  {id:'shuttler',   text:'Shuttler',       cls:'shuttler'},
+  {id:'dnp',text:'DNP',cls:'dnp'},
+  {id:'defbot',text:'Defence Bot',cls:'defbot'},
+  {id:'unreliable',text:'Unreliable',cls:'unreliable'},
+  {id:'beachprone',text:'Beach Prone',cls:'beachprone'},
+  {id:'qdrivers',text:'Quality Drivers',cls:'qdrivers'},
+  {id:'fast',text:'Fast',cls:'fast'},
+  {id:'slow',text:'Slow',cls:'slow'},
+  {id:'highcycler',text:'High Cycler',cls:'highcycler'},
+  {id:'climber',text:'Climber',cls:'climber'},
+  {id:'penaltyprone',text:'Penalty Prone',cls:'penaltyprone'},
+  {id:'goodauto',text:'Good Auto',cls:'goodauto'},
+  {id:'noauto',text:'No Auto',cls:'noauto'},
+  {id:'weakauto',text:'Weak Auto',cls:'weakauto'},
+  {id:'fragile',text:'Fragile/Tipped',cls:'fragile'},
+  {id:'kitbot',text:'Kitbot',cls:'kitbot'},
+  {id:'shuttler',text:'Shuttler',cls:'shuttler'},
+  {id:'mustpick',text:'Must Pick',cls:'mustpick'},
+  {id:'staticshooter',text:"static shooter',cls: 'statticshooter'}
 ];
-
-// ═══════════════════════════════════════════════
-// PERSISTENCE
-// ═══════════════════════════════════════════════
 function ld(k,d){try{var v=localStorage.getItem(k);return v!==null?JSON.parse(v):d;}catch(e){return d;}}
 function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
-
-var matches  = ld('vana2-matches',[]);  // [{id,match,red:[],blue:[]}]
-var notes    = ld('vana2-notes',[]);    // [{id,team,match,alliance,rating,labels:[],text,scout,ts}]
-var ratings  = ld('vana2-ratings',{});  // {teamNum: 1-5}
-var teamNames= ld('vana2-names',{});    // {teamNum: "Breakaway"}
-var scouterName = localStorage.getItem('vana2-scouter')||'';
-
+var matches=ld('vana2-matches',[]);
+var notes=ld('vana2-notes',[]);
+var ratings=ld('vana2-ratings',{});
+var teamNames=ld('vana2-names',{});
+var scouterName=localStorage.getItem('vana2-scouter')||'';
 function pM(){sv('vana2-matches',matches);}
 function pN(){sv('vana2-notes',notes);}
 function pR(){sv('vana2-ratings',ratings);}
 function pNm(){sv('vana2-names',teamNames);}
-
-// ═══════════════════════════════════════════════
-// SCOUTER
-// ═══════════════════════════════════════════════
-function saveScouterName(){
-  scouterName=document.getElementById('scouter-inp').value.trim();
-  localStorage.setItem('vana2-scouter',scouterName);
-  updateScouterBadge();
-}
-function updateScouterBadge(){
-  document.getElementById('scouter-badge').textContent='👤 '+(scouterName||'—');
-}
-function saveEventKey(){
-  var key=document.getElementById('event-key-inp').value.trim().toLowerCase();
-  localStorage.setItem('vana2-eventkey', key);
-  var status=document.getElementById('event-key-status');
-  status.textContent = key ? '✓ Event key saved: '+key : '';
-  status.style.color = key ? 'var(--green)' : 'var(--t3)';
-}
-
-// ═══════════════════════════════════════════════
-// TABS
-// ═══════════════════════════════════════════════
+function saveScouterName(){scouterName=document.getElementById('scouter-inp').value.trim();localStorage.setItem('vana2-scouter',scouterName);updateScouterBadge();}
+function updateScouterBadge(){document.getElementById('scouter-badge').textContent='👤 '+(scouterName||'—');}
+function saveEventKey(){var key=document.getElementById('event-key-inp').value.trim().toLowerCase();localStorage.setItem('vana2-eventkey',key);var s=document.getElementById('event-key-status');s.textContent=key?'✓ Saved: '+key:'';s.style.color=key?'var(--green)':'var(--t3)';}
 function switchTab(name){
   document.querySelectorAll('.view').forEach(function(v){v.classList.remove('on');});
   document.querySelectorAll('.tabitem').forEach(function(t){t.classList.remove('on');});
@@ -552,565 +340,213 @@ function switchTab(name){
   if(name==='stats')renderStats();
   document.getElementById('main-scroll').scrollTop=0;
 }
-
-// ═══════════════════════════════════════════════
-// ADD MATCH MODAL
-// ═══════════════════════════════════════════════
 function openAddMatchModal(){
-  ['mm-num','mm-r1','mm-r2','mm-r3','mm-b1','mm-b2','mm-b3'].forEach(function(id){
-    document.getElementById(id).value='';
-  });
+  ['mm-num','mm-r1','mm-r2','mm-r3','mm-b1','mm-b2','mm-b3'].forEach(function(id){document.getElementById(id).value='';});
   document.getElementById('match-modal').classList.add('on');
   setTimeout(function(){document.getElementById('mm-num').focus();},300);
 }
-
 function saveMatch(){
   var num=document.getElementById('mm-num').value.trim();
   if(!num){toast('Enter a match number','err');return;}
-  var red=[
-    document.getElementById('mm-r1').value.trim(),
-    document.getElementById('mm-r2').value.trim(),
-    document.getElementById('mm-r3').value.trim(),
-  ].filter(Boolean);
-  var blue=[
-    document.getElementById('mm-b1').value.trim(),
-    document.getElementById('mm-b2').value.trim(),
-    document.getElementById('mm-b3').value.trim(),
-  ].filter(Boolean);
+  var red=[document.getElementById('mm-r1').value.trim(),document.getElementById('mm-r2').value.trim(),document.getElementById('mm-r3').value.trim()].filter(Boolean);
+  var blue=[document.getElementById('mm-b1').value.trim(),document.getElementById('mm-b2').value.trim(),document.getElementById('mm-b3').value.trim()].filter(Boolean);
   if(!red.length&&!blue.length){toast('Add at least one team','err');return;}
   matches.push({id:Date.now(),match:num,red:red,blue:blue});
-  pM();
-  closeM('match-modal');
-  renderMatches();
+  pM();closeM('match-modal');renderMatches();
   fetchNamesForTeams(red.concat(blue));
-  // Fetch stats for all teams in this match
   var ek=localStorage.getItem('vana2-eventkey')||'';
-  if(ek){
-    red.concat(blue).forEach(function(t){
-      getTeamStats(t, ek).then(function(stats){
-        if(!stats) return;
-        if(stats.epa!=null){var ec=ld('vana2-epa',{});ec[t]=Math.round(stats.epa*10)/10;sv('vana2-epa',ec);}
-        if(stats.rank!=null){var rc=ld('vana2-rank',{});rc[t]=stats.rank;sv('vana2-rank',rc);}
-        if(stats.name&&!teamNames[t]){teamNames[t]=stats.name;pNm();}
-      });
-    });
-  }
+  if(ek){red.concat(blue).forEach(function(t){getTeamStats(t,ek).then(function(s){if(!s)return;if(s.epa!=null){var ec=ld('vana2-epa',{});ec[t]=Math.round(s.epa*10)/10;sv('vana2-epa',ec);}if(s.rank!=null){var rc=ld('vana2-rank',{});rc[t]=s.rank;sv('vana2-rank',rc);}if(s.name&&!teamNames[t]){teamNames[t]=s.name;pNm();}});});}
   toast('Match '+num+' added','ok');
 }
-
-// Pull schedule from backend
-async function pullSchedule(){
-  // 🔌 BACKEND: Calls pullEventSchedule() from api stubs above
-  // You need to provide an event key — could come from a settings input
-  var eventKey = localStorage.getItem('vana2-eventkey')||'';
-  if(!eventKey){
-    eventKey = prompt('Enter event key (e.g. 2026casd):');
-    if(!eventKey) return;
-    localStorage.setItem('vana2-eventkey', eventKey);
-  }
-  toast('Pulling schedule…','info');
-  var sched = await pullEventSchedule(eventKey);
-  if(!sched||!sched.length){toast('No schedule returned — check api.js stub','err');return;}
-  var added=0;
-  sched.forEach(function(m){
-    var exists=matches.find(function(x){return x.match===m.match;});
-    if(!exists){matches.push({id:Date.now()+added,match:m.match,red:m.red,blue:m.blue});added++;}
-  });
-  pM();renderMatches();
-  toast('Added '+added+' matches','ok');
-}
-
-// ═══════════════════════════════════════════════
-// RENDER MATCHES
-// ═══════════════════════════════════════════════
 function renderMatches(){
   var el=document.getElementById('matches-list');
-  var sorted=matches.slice().sort(function(a,b){
-    var na=parseInt((a.match||'').replace(/\D/g,''))||0;
-    var nb=parseInt((b.match||'').replace(/\D/g,''))||0;
-    return na-nb;
-  });
-  if(!sorted.length){
-    el.innerHTML='<div class="empty"><div class="empty-i">⚡</div><div class="empty-t">No matches yet</div><div class="empty-s">Tap + Add Match or Pull Schedule to get started</div></div>';
-    return;
-  }
+  var sorted=matches.slice().sort(function(a,b){return(parseInt((a.match||'').replace(/\D/g,''))||0)-(parseInt((b.match||'').replace(/\D/g,''))||0);});
+  if(!sorted.length){el.innerHTML='<div class="empty"><div class="empty-i">⚡</div><div class="empty-t">No matches yet</div><div class="empty-s">Tap + Add Match to get started</div></div>';return;}
   var h='';
   sorted.forEach(function(m){
-    // Check if all teams have notes
     var allTeams=m.red.concat(m.blue);
     var notedTeams=0;
-    allTeams.forEach(function(t){
-      var hasNote=notes.find(function(n){return n.team===t&&n.match===m.match;});
-      if(hasNote)notedTeams++;
-    });
+    allTeams.forEach(function(t){if(notes.find(function(n){return n.team===t&&n.match===m.match;}))notedTeams++;});
     var isDone=allTeams.length>0&&notedTeams===allTeams.length;
-    var progress=allTeams.length?Math.round(notedTeams/allTeams.length*100):0;
-
     h+='<div class="match-card">'
       +'<div class="match-card-header">'
       +'<span class="match-label">'+esc(m.match)+'</span>'
       +'<div style="display:flex;align-items:center;gap:8px;">'
-      +'<span style="font-size:0.65rem;color:var(--t3);">'+notedTeams+'/'+allTeams.length+' scouted</span>'
-      +'<span class="match-status '+(isDone?'done':'pending')+'">'+(isDone?'DONE':'PENDING')+'</span>'
-      +'<button class="btn S" style="width:auto;padding:3px 10px;font-size:0.7rem;" onclick="exportMatch('+m.id+')">⬆ Export</button>'+'<button class="match-del" onclick="deleteMatch('+m.id+')">✕</button>'
-      +'</div>'
-      +'</div>';
-
-    // Red alliance
-    if(m.red.length){
-      h+='<div class="alliance-label red">🔴 Red</div>';
-      h+='<div class="alliance-row red-row">';
-      m.red.forEach(function(team){
-        h+=teamChipHTML(team,m.match,'red');
-      });
-      // Pad empty slots
-      for(var i=m.red.length;i<3;i++) h+='<div></div>';
-      h+='</div>';
-    }
-
-    // Blue alliance
-    if(m.blue.length){
-      h+='<div class="alliance-label blue">🔵 Blue</div>';
-      h+='<div class="alliance-row">';
-      m.blue.forEach(function(team){
-        h+=teamChipHTML(team,m.match,'blue');
-      });
-      for(var i=m.blue.length;i<3;i++) h+='<div></div>';
-      h+='</div>';
-    }
-
+      +'<span class="match-status '+(isDone?'done':'pending')+'">'+( isDone?'DONE':'PENDING')+'</span>'
+      +'<button class="btn S" style="width:auto;padding:3px 10px;font-size:0.7rem;" onclick="exportMatch('+m.id+')">⬆ Export</button>'
+      +'<button class="match-del" onclick="deleteMatch('+m.id+')">✕</button>'
+      +'</div></div>';
+    // Side by side alliances
+    h+='<div style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border);">';
+    // Red
+    h+='<div style="border-right:1px solid var(--border);padding:10px;">';
+    h+='<div class="alliance-label red" style="padding:0 0 6px;">🔴 Red</div>';
+    m.red.forEach(function(team){h+=teamChipHTML(team,m.match,'red');});
     h+='</div>';
+    // Blue
+    h+='<div style="padding:10px;">';
+    h+='<div class="alliance-label blue" style="padding:0 0 6px;">🔵 Blue</div>';
+    m.blue.forEach(function(team){h+=teamChipHTML(team,m.match,'blue');});
+    h+='</div>';
+    h+='</div></div>';
   });
   el.innerHTML=h;
 }
-
 function teamChipHTML(team,match,alliance){
   var note=notes.find(function(n){return n.team===team&&n.match===match;});
   var hasNote=!!note;
   var name=teamNames[team]||'';
   var rating=note?note.rating:0;
-  var stars='';
-  if(rating>0){for(var i=1;i<=5;i++)stars+=(i<=rating?'★':'☆');}
-  return '<div class="team-chip '+alliance+'-chip'+(hasNote?' has-note':'')+'" onclick="openNoteModal(\''+team+'\',\''+match+'\',\''+alliance+'\')">'
-    +'<div class="chip-num '+alliance+'">'+team+'</div>'
-    +(name?'<div class="chip-name">'+esc(name)+'</div>':'')
-    +(stars?'<div class="chip-rating" style="color:var(--'+alliance+');">'+stars+'</div>':'<div class="chip-dot '+(hasNote?alliance:'')+'"></div>')
+  var stars='';if(rating>0){for(var i=1;i<=5;i++)stars+=(i<=rating?'★':'☆');}
+  return '<div class="team-chip '+alliance+'-chip'+(hasNote?' has-note':'')+'" data-team="'+team+'" data-match="'+match+'" data-alliance="'+alliance+'" style="display:flex;align-items:center;gap:8px;padding:8px;border-radius:9px;margin-bottom:5px;">'
+    +'<div style="flex:1;min-width:0;"><div class="chip-num '+alliance+'">'+team+'</div>'+(name?'<div class="chip-name">'+esc(name)+'</div>':'')+'</div>'
+    +(stars?'<div style="font-size:0.7rem;color:var(--'+alliance+');">'+stars+'</div>':'<div style="width:6px;height:6px;border-radius:50%;background:'+(hasNote?'var(--'+alliance+')':'var(--t4)')+';flex-shrink:0;"></div>')
     +'</div>';
 }
-
 function exportMatch(id){
-  var m=matches.find(function(x){return x.id===id;});
-  if(!m) return;
-  var out='=== '+m.match+' ===\n';
-  out+='Red: '+m.red.join(', ')+'\n';
-  out+='Blue: '+m.blue.join(', ')+'\n\n';
-  var allTeams=m.red.concat(m.blue);
-  allTeams.forEach(function(team){
+  var m=matches.find(function(x){return x.id===id;});if(!m)return;
+  var out='=== '+m.match+' ===\nRed: '+m.red.join(', ')+'\nBlue: '+m.blue.join(', ')+'\n\n';
+  m.red.concat(m.blue).forEach(function(team){
     var note=notes.find(function(n){return n.team===team&&n.match===m.match;});
     var alliance=m.red.indexOf(team)>=0?'Red':'Blue';
     out+='── Team '+team+(teamNames[team]?' ('+teamNames[team]+')':'')+' ['+alliance+'] ──\n';
-    if(note){
-      if(note.rating) out+='Rating: '+note.rating+'/5\n';
-      if(note.labels&&note.labels.length) out+='Labels: '+note.labels.join(', ')+'\n';
-      if(note.text) out+=note.text+'\n';
-      if(note.scout) out+='Scout: '+note.scout+'\n';
-    } else {
-      out+='No notes\n';
-    }
+    if(note){if(note.rating)out+='Rating: '+note.rating+'/5\n';if(note.labels&&note.labels.length)out+='Labels: '+note.labels.join(', ')+'\n';if(note.text)out+=note.text+'\n';if(note.scout)out+='Scout: '+note.scout+'\n';}else{out+='No notes\n';}
     out+='\n';
   });
-  if(navigator.clipboard&&navigator.clipboard.writeText){
-    navigator.clipboard.writeText(out.trim()).then(function(){toast('Match '+m.match+' copied','ok');}).catch(function(){fbCopy(out);});
-  } else fbCopy(out);
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(out.trim()).then(function(){toast('Match '+m.match+' copied','ok');}).catch(function(){fbCopy(out);});}else fbCopy(out);
 }
-
-function deleteMatch(id){
-  if(!confirm('Delete this match?'))return;
-  matches=matches.filter(function(m){return m.id!==id;});
-  pM();renderMatches();toast('Match deleted');
-}
-
-// ═══════════════════════════════════════════════
-// NOTE MODAL (from match chip tap)
-// ═══════════════════════════════════════════════
+function deleteMatch(id){if(!confirm('Delete this match?'))return;matches=matches.filter(function(m){return m.id!==id;});pM();renderMatches();toast('Match deleted');}
 var noteCtx={team:null,match:null,alliance:null,rating:0,labels:[]};
-
 function openNoteModal(team,match,alliance){
-  noteCtx.team=team;noteCtx.match=match;noteCtx.alliance=alliance;
-  noteCtx.rating=0;noteCtx.labels=[];
-
-  // Pre-fill if existing note
+  noteCtx.team=team;noteCtx.match=match;noteCtx.alliance=alliance;noteCtx.rating=0;noteCtx.labels=[];
   var existing=notes.find(function(n){return n.team===team&&n.match===match;});
-  if(existing){
-    noteCtx.rating=existing.rating||0;
-    noteCtx.labels=existing.labels?existing.labels.slice():[];
-    document.getElementById('note-text').value=existing.text||'';
-  } else {
-    document.getElementById('note-text').value='';
-  }
-
+  if(existing){noteCtx.rating=existing.rating||0;noteCtx.labels=existing.labels?existing.labels.slice():[];document.getElementById('note-text').value=existing.text||'';}
+  else{document.getElementById('note-text').value='';}
   var name=teamNames[team]||'Team '+team;
   document.getElementById('note-modal-title').innerHTML='<span>'+esc(name)+'</span><span class="mc" onclick="closeM(\'note-modal\')">✕</span>';
-
   var banner=document.getElementById('note-banner');
   banner.className='note-alliance-banner '+(alliance==='red'?'red':'blue');
   banner.innerHTML=(alliance==='red'?'🔴 Red Alliance':'🔵 Blue Alliance')+' &mdash; '+esc(match);
-
-  renderNoteStars();
-  renderNoteLabels();
+  renderNoteStars();renderNoteLabels();
   document.getElementById('note-modal').classList.add('on');
 }
-
-function renderNoteStars(){
-  var h='';
-  for(var i=1;i<=5;i++){
-    h+='<span class="star-btn" onclick="setNoteRating('+i+')">'+(i<=noteCtx.rating?'★':'☆')+'</span>';
-  }
-  document.getElementById('note-stars').innerHTML=h;
-}
-
-function setNoteRating(val){
-  noteCtx.rating=noteCtx.rating===val?0:val;
-  renderNoteStars();
-}
-
-function renderNoteLabels(){
-  var h='';
-  LABELS.forEach(function(l){
-    var on=noteCtx.labels.indexOf(l.id)>=0;
-    h+='<div class="lbl '+(on?'on '+l.cls:'off')+'" onclick="toggleNoteLabel(\''+l.id+'\')">'+l.text+'</div>';
-  });
-  document.getElementById('note-labels').innerHTML=h;
-}
-
-function toggleNoteLabel(id){
-  var i=noteCtx.labels.indexOf(id);
-  if(i>=0)noteCtx.labels.splice(i,1);else noteCtx.labels.push(id);
-  renderNoteLabels();
-}
-
+function renderNoteStars(){var h='';for(var i=1;i<=5;i++){h+='<span class="star-btn" onclick="setNoteRating('+i+')">'+( i<=noteCtx.rating?'★':'☆')+'</span>';}document.getElementById('note-stars').innerHTML=h;}
+function setNoteRating(val){noteCtx.rating=noteCtx.rating===val?0:val;renderNoteStars();}
+function renderNoteLabels(){var h='';LABELS.forEach(function(l){var on=noteCtx.labels.indexOf(l.id)>=0;h+='<div class="lbl '+(on?'on '+l.cls:'off')+'" onclick="toggleNoteLabel(\''+ l.id+'\')">'+l.text+'</div>';});document.getElementById('note-labels').innerHTML=h;}
+function toggleNoteLabel(id){var i=noteCtx.labels.indexOf(id);if(i>=0)noteCtx.labels.splice(i,1);else noteCtx.labels.push(id);renderNoteLabels();}
 function saveNoteFromModal(){
   var team=noteCtx.team,match=noteCtx.match,alliance=noteCtx.alliance;
   var text=document.getElementById('note-text').value.trim();
-
-  // Remove existing note for this team+match if any
   notes=notes.filter(function(n){return!(n.team===team&&n.match===match);});
-
-  notes.push({
-    id:Date.now(),team:team,match:match,alliance:alliance,
-    rating:noteCtx.rating,labels:noteCtx.labels.slice(),
-    text:text,scout:scouterName,
-    ts:new Date().toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})
-  });
-  pN();
-  closeM('note-modal');
-  renderMatches();
-  renderTeams();
-  toast('Saved — Team '+team,'ok');
+  notes.push({id:Date.now(),team:team,match:match,alliance:alliance,rating:noteCtx.rating,labels:noteCtx.labels.slice(),text:text,scout:scouterName,ts:new Date().toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})});
+  pN();closeM('note-modal');renderMatches();renderTeams();toast('Saved — Team '+team,'ok');
 }
-
-// ═══════════════════════════════════════════════
-// TEAMS TAB
-// ═══════════════════════════════════════════════
 function renderTeams(){
   var q=(document.getElementById('team-search').value||'').trim();
   var el=document.getElementById('teams-list');
-
-  // All unique teams from notes + matches
   var seen={},nums=[];
   notes.forEach(function(n){if(!seen[n.team]){seen[n.team]=true;nums.push(n.team);}});
-  matches.forEach(function(m){
-    m.red.concat(m.blue).forEach(function(t){if(!seen[t]){seen[t]=true;nums.push(t);}});
-  });
-
-  if(q) nums=nums.filter(function(t){return t.indexOf(q)>=0||(teamNames[t]||'').toLowerCase().indexOf(q.toLowerCase())>=0;});
-  nums.sort(function(a,b){
-    var ra=ratings[a]||0,rb=ratings[b]||0;
-    if(ra!==rb)return rb-ra;
-    return parseInt(a)-parseInt(b);
-  });
-
-  if(!nums.length){
-    el.innerHTML='<div class="empty"><div class="empty-i">🗂️</div><div class="empty-t">'+(q?'No teams found':'No teams yet')+'</div><div class="empty-s">'+(q?'Try a different search':'Add matches to see teams here')+'</div></div>';
-    return;
-  }
-
+  matches.forEach(function(m){m.red.concat(m.blue).forEach(function(t){if(!seen[t]){seen[t]=true;nums.push(t);}});});
+  if(q)nums=nums.filter(function(t){return t.indexOf(q)>=0||(teamNames[t]||'').toLowerCase().indexOf(q.toLowerCase())>=0;});
+  nums.sort(function(a,b){var ra=ratings[a]||0,rb=ratings[b]||0;if(ra!==rb)return rb-ra;return parseInt(a)-parseInt(b);});
+  if(!nums.length){el.innerHTML='<div class="empty"><div class="empty-i">🗂️</div><div class="empty-t">'+(q?'No teams found':'No teams yet')+'</div><div class="empty-s">'+(q?'Try a different search':'Add matches to see teams here')+'</div></div>';return;}
   var h='';
   nums.forEach(function(num){
-    var teamNotes=notes.filter(function(n){return n.team===num;});
+    var tn=notes.filter(function(n){return n.team===num;});
     var r=ratings[num]||0;
     var stars='';for(var i=1;i<=5;i++)stars+=(i<=r?'★':'☆');
-    var allL=[],lSeen={};
-    teamNotes.forEach(function(n){(n.labels||[]).forEach(function(l){if(!lSeen[l]){lSeen[l]=true;allL.push(l);}});});
-    var lh=allL.slice(0,3).map(function(lid){
-      var l=LABELS.find(function(x){return x.id===lid;});
-      return l?'<div class="lbl on '+l.cls+'" style="font-size:0.58rem;padding:2px 6px;">'+l.text+'</div>':'';
-    }).join('');
-    var matchCount=new Set(teamNotes.map(function(n){return n.match;})).size;
-    h+='<div class="team-row" onclick="openTeamDetail(\''+num+'\')"><div class="team-num">'+num+'</div><div class="team-info"><div class="team-name-txt">'+(teamNames[num]||'Team '+num)+'</div><div class="team-meta">'+teamNotes.length+' note'+(teamNotes.length!==1?'s':'')+' · '+matchCount+' match'+(matchCount!==1?'es':'')+'</div>'+(r>0?'<div class="team-stars-txt" style="color:var(--yellow);">'+stars+'</div>':'')+(lh?'<div style="display:flex;flex-wrap:wrap;gap:3px;margin-top:4px;">'+lh+'</div>':'')+'</div><div style="color:var(--t3);font-size:1rem;">›</div></div>';
+    var allL=[],lSeen={};tn.forEach(function(n){(n.labels||[]).forEach(function(l){if(!lSeen[l]){lSeen[l]=true;allL.push(l);}});});
+    var lh=allL.slice(0,3).map(function(lid){var l=LABELS.find(function(x){return x.id===lid;});return l?'<div class="lbl on '+l.cls+'" style="font-size:0.58rem;padding:2px 6px;">'+l.text+'</div>':''}).join('');
+    var mc=new Set(tn.map(function(n){return n.match;})).size;
+    h+='<div class="team-row" onclick="openTeamDetail(\''+ num+'\')">'+'<div class="team-num">'+num+'</div>'
+      +'<div class="team-info"><div class="team-name-txt">'+(teamNames[num]||'Team '+num)+'</div>'
+      +'<div class="team-meta">'+tn.length+' note'+(tn.length!==1?'s':'')+' · '+mc+' match'+(mc!==1?'es':'')+'</div>'
+      +(r>0?'<div class="team-stars-txt" style="color:var(--yellow);">'+stars+'</div>':''  )
+      +(lh?'<div style="display:flex;flex-wrap:wrap;gap:3px;margin-top:4px;">'+lh+'</div>':'')+'</div>'
+      +'<div style="color:var(--t3);font-size:1rem;">›</div></div>';
   });
   el.innerHTML=h;
 }
-
-// ═══════════════════════════════════════════════
-// TEAM DETAIL
-// ═══════════════════════════════════════════════
 var dNum=null;
 function openTeamDetail(num){
   dNum=num;
-  var teamNotes=notes.filter(function(n){return n.team===num;});
-  teamNotes.sort(function(a,b){return(parseInt((a.match||'').replace(/\D/g,''))||0)-(parseInt((b.match||'').replace(/\D/g,''))||0);});
+  var tn=notes.filter(function(n){return n.team===num;});
+  tn.sort(function(a,b){return(parseInt((a.match||'').replace(/\D/g,''))||0)-(parseInt((b.match||'').replace(/\D/g,''))||0);});
   var r=ratings[num]||0;
-
-  // Star rating row
   var starsH='<div class="team-detail-rating">';
-  for(var i=1;i<=5;i++){starsH+='<span class="big-star" onclick="setTeamRating(\''+num+'\','+i+')">'+(i<=r?'★':'☆')+'</span>';}
+  for(var i=1;i<=5;i++){starsH+='<span class="big-star" onclick="setTeamRating(\''+ num+'\','+i+')">'+( i<=r?'★':'☆')+'</span>';}
   starsH+='</div>';
-
-  // Notes
   var nH='';
-  if(teamNotes.length){
-    teamNotes.forEach(function(n){
-      var lh=(n.labels||[]).map(function(lid){
-        var l=LABELS.find(function(x){return x.id===lid;});
-        return l?'<span class="note-mini-lbl">'+l.text+'</span>':'';
-      }).join('');
+  if(tn.length){
+    tn.forEach(function(n){
+      var lh=(n.labels||[]).map(function(lid){var l=LABELS.find(function(x){return x.id===lid;});return l?'<span class="note-mini-lbl">'+l.text+'</span>':''}).join('');
       var stars='';if(n.rating){for(var i=1;i<=5;i++)stars+=(i<=n.rating?'★':'☆');}
       nH+='<div class="note-card">'
         +'<div class="note-card-header">'
         +'<span class="note-match-tag">'+esc(n.match)+'</span>'
-        +(n.alliance?'<span class="note-alliance-tag '+n.alliance+'">'+(n.alliance==='red'?'🔴':'🔵')+'</span>':'')
-        +(stars?'<span class="note-rating-tag" style="color:var(--yellow);">'+stars+'</span>':'')
+        +(n.alliance?'<span class="note-alliance-tag '+n.alliance+'">'+( n.alliance==='red'?'🔴':'🔵')+'</span>':''  )
+        +(stars?'<span class="note-rating-tag" style="color:var(--yellow);">'+stars+'</span>':''  )
         +'<span class="note-scout-tag">'+(n.scout?esc(n.scout):'')+'</span>'
         +'</div>'
-        +(n.text?'<div class="note-body">'+esc(n.text)+'</div>':'')
-        +(lh?'<div class="note-lbl-row">'+lh+'</div>':'')
-        +'</div>';
+        +(n.text?'<div class="note-body">'+esc(n.text)+'</div>':''  )
+        +(lh?'<div class="note-lbl-row">'+lh+'</div>':'')+'</div>';
     });
-  } else {
-    nH='<div class="empty" style="padding:16px 0;"><div class="empty-s">No notes yet for this team</div></div>';
-  }
-
+  } else {nH='<div class="empty" style="padding:16px 0;"><div class="empty-s">No notes yet</div></div>';}
   document.getElementById('dc').innerHTML=
-    '<div style="margin-bottom:4px;"><div style="font-family:\'Bebas Neue\',sans-serif;font-size:2.4rem;color:var(--text);line-height:1;">'+num+'</div>'
+    '<div style="margin-bottom:4px;"><div style="font-family:\'Orbitron\',sans-serif;font-size:1.8rem;font-weight:700;color:var(--text);line-height:1;">'+num+'</div>'
     +'<div style="font-size:0.9rem;font-weight:600;color:var(--t2);margin-top:2px;">'+(teamNames[num]||'Team '+num)+'</div></div>'
     +'<div class="div" style="margin:10px 0;"></div>'
-    +'<div class="sh">Team Rating</div>'
-    +starsH
-    +'<div class="div"></div>'
-    +'<div class="sh">Notes</div>'
-    +nH;
-
+    +'<div class="sh">Team Rating</div>'+starsH
+    +'<div class="div"></div><div class="sh">Notes</div>'+nH;
   document.getElementById('dv').classList.add('on');
   document.getElementById('dc').scrollTop=0;
-
-  // Fetch live stats and cache them
-  var eventKey = localStorage.getItem('vana2-eventkey')||'';
-  if(eventKey){
-    getTeamStats(num, eventKey).then(function(stats){
-      if(!stats) return;
-      if(stats.epa != null){
-        var epaCache=ld('vana2-epa',{});
-        epaCache[num]=Math.round(stats.epa*10)/10;
-        sv('vana2-epa',epaCache);
-      }
-      if(stats.rank != null){
-        var rankCache=ld('vana2-rank',{});
-        rankCache[num]=stats.rank;
-        sv('vana2-rank',rankCache);
-      }
-      if(stats.name && !teamNames[num]){
-        teamNames[num]=stats.name;
-        pNm();
-      }
-      renderStats();
-      renderTeams();
-      // Update name in detail view if it just loaded
-      var nameEl=document.querySelector('#dc .team-detail-name');
-      if(nameEl && stats.name) nameEl.textContent=stats.name;
-    });
-  }
-}
-
-function setTeamRating(num,val){
-  ratings[num]=ratings[num]===val?0:val;
-  pR();
-  // Re-render stars in detail view
-  var r=ratings[num]||0;
-  var stars=document.querySelectorAll('.big-star');
-  stars.forEach(function(s,i){s.textContent=(i+1<=r?'★':'☆');});
-  renderTeams();
-}
-
-function closeDetail(){document.getElementById('dv').classList.remove('on');dNum=null;}
-
-// ═══════════════════════════════════════════════
-// TEAM NAME FETCHING
-// ═══════════════════════════════════════════════
-async function fetchNamesForTeams(teams){
-  for(var i=0;i<teams.length;i++){
-    var num=teams[i];
-    if(teamNames[num]) continue;
-    var name=await getTeamName(num); // 🔌 calls api stub above
-    if(name){teamNames[num]=name;pNm();}
-  }
-  renderMatches();
-  renderTeams();
-}
-
-
-// ═══════════════════════════════════════════════
-// DEBUG LOG
-// ═══════════════════════════════════════════════
-function dbg(msg,data){
-  var extra=data!==undefined?' => '+JSON.stringify(data):'';
-  var ts=new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-  var line='['+ts+'] '+msg+extra;
-  // buffer it
-  if(!window._dbgBuf) window._dbgBuf=[];
-  window._dbgBuf.push(line);
-  // try to write to panel if visible
-  var entries=document.getElementById('debug-entries');
-  var el=document.getElementById('debug-log');
-  if(entries&&el){
-    el.style.display='block';
-    entries.textContent=window._dbgBuf.join('\n');
-    entries.scrollTop=entries.scrollHeight;
-  }
-}
-function flushDebug(){
-  var entries=document.getElementById('debug-entries');
-  var el=document.getElementById('debug-log');
-  if(!entries||!el||!window._dbgBuf||!window._dbgBuf.length) return;
-  el.style.display='block';
-  entries.textContent=window._dbgBuf.join('\n');
-  entries.scrollTop=entries.scrollHeight;
-}
-function clearDebug(){
-  document.getElementById('debug-entries').textContent='';
-  document.getElementById('debug-log').style.display='none';
-}
-
-// ═══════════════════════════════════════════════
-// API TEST
-// ═══════════════════════════════════════════════
-async function runAPITest(){
-  var num=document.getElementById('test-team').value.trim();
-  var ev=document.getElementById('test-event').value.trim();
-  var out=document.getElementById('test-output');
-  if(!num||!ev){out.textContent='Enter team # and event key.';out.style.color='var(--red)';return;}
-  out.style.color='var(--t2)';
-  out.textContent='Calling getData('+num+', '+ev+')...';
-  try{
-    var result=await getData(num,ev);
-    if(result===null||result===undefined){
-      out.textContent='Returned null. getData may not be defined or found no data.';
-      out.style.color='var(--red)';
-    }else{
-      out.textContent='Success: '+JSON.stringify(result);
-      out.style.color='var(--green)';
-    }
-  }catch(e){
-    out.textContent='Error: '+e.message;
-    out.style.color='var(--red)';
-  }
-}
-
-// ═══════════════════════════════════════════════
-// REFRESH ALL STATS
-// ═══════════════════════════════════════════════
-async function refreshAllStats(){
-  var eventKey=localStorage.getItem('vana2-eventkey')||'';
-  if(!eventKey){toast('Set event key in Settings first','err');return;}
-  dbg('Refreshing with event key: '+eventKey);
-
-  // Gather all unique teams
-  var teamSet={};
-  notes.forEach(function(n){teamSet[n.team]=true;});
-  matches.forEach(function(m){m.red.concat(m.blue).forEach(function(t){teamSet[t]=true;});});
-  var allTeams=Object.keys(teamSet);
-
-  if(!allTeams.length){toast('No teams to refresh','err');return;}
-
-  var btn=document.getElementById('refresh-btn');
-  btn.textContent='↻ Refreshing…';
-  btn.disabled=true;
-
-  var done=0;
-  for(var i=0;i<allTeams.length;i++){
-    var s=await getTeamStats(allTeams[i], eventKey);
-    dbg('Team '+allTeams[i]+': '+(s?JSON.stringify(s):'null'));
-    done++;
-    btn.textContent='↻ '+done+'/'+allTeams.length+'…';
-  }
-
-  btn.textContent='↻ Refresh';
-  btn.disabled=false;
-  renderStats();
-  renderTeams();
-  toast('Stats refreshed — '+done+' teams','ok');
-}
-
-// ═══════════════════════════════════════════════
-// STATS TAB
-// ═══════════════════════════════════════════════
-function renderStats(){
-  flushDebug();
-  // Pre-fill test box with saved event key
   var ek=localStorage.getItem('vana2-eventkey')||'';
-  var ekInp=document.getElementById('test-event');
-  if(ekInp&&ek&&!ekInp.value) ekInp.value=ek;
+  if(ek){getTeamStats(num,ek).then(function(s){if(!s)return;if(s.epa!=null){var ec=ld('vana2-epa',{});ec[num]=Math.round(s.epa*10)/10;sv('vana2-epa',ec);}if(s.rank!=null){var rc=ld('vana2-rank',{});rc[num]=s.rank;sv('vana2-rank',rc);}if(s.name&&!teamNames[num]){teamNames[num]=s.name;pNm();}renderStats();renderTeams();});}
+}
+function setTeamRating(num,val){ratings[num]=ratings[num]===val?0:val;pR();var r=ratings[num]||0;document.querySelectorAll('.big-star').forEach(function(s,i){s.textContent=(i+1<=r?'★':'☆');});renderTeams();}
+function closeDetail(){document.getElementById('dv').classList.remove('on');dNum=null;}
+async function fetchNamesForTeams(teams){for(var i=0;i<teams.length;i++){var num=teams[i];if(teamNames[num])continue;if(typeof getTeamName==='function'){var name=await getTeamName(num);if(name){teamNames[num]=name;pNm();}}}renderMatches();renderTeams();}
+async function getTeamStats(number,eventKey){
+  if(!eventKey)return null;
+  try{
+    var stats=await getData(number,eventKey);
+    if(!stats)return null;
+    if(stats.epa!=null){var ec=ld('vana2-epa',{});ec[String(number)]=Math.round(stats.epa*10)/10;sv('vana2-epa',ec);}
+    if(stats.rank!=null){var rc=ld('vana2-rank',{});rc[String(number)]=stats.rank;sv('vana2-rank',rc);}
+    if(stats.name&&!teamNames[String(number)]){teamNames[String(number)]=stats.name;pNm();}
+    return stats;
+  }catch(e){return null;}
+}
+async function refreshAllStats(){
+  var ek=localStorage.getItem('vana2-eventkey')||'';
+  if(!ek){toast('Set event key in Settings first','err');return;}
+  var teamSet={};notes.forEach(function(n){teamSet[n.team]=true;});matches.forEach(function(m){m.red.concat(m.blue).forEach(function(t){teamSet[t]=true;});});
+  var allTeams=Object.keys(teamSet);
+  if(!allTeams.length){toast('No teams to refresh','err');return;}
+  var btn=document.getElementById('refresh-btn');btn.textContent='↻ Refreshing…';btn.disabled=true;
+  for(var i=0;i<allTeams.length;i++){await getTeamStats(allTeams[i],ek);btn.textContent='↻ '+(i+1)+'/'+allTeams.length+'…';}
+  btn.textContent='↻ Refresh';btn.disabled=false;
+  renderStats();renderTeams();toast('Stats refreshed — '+allTeams.length+' teams','ok');
+}
+function renderStats(){
   var el=document.getElementById('stats-content');
-
-  // Gather all unique teams
-  var teamSet={};
-  notes.forEach(function(n){teamSet[n.team]=true;});
-  matches.forEach(function(m){m.red.concat(m.blue).forEach(function(t){teamSet[t]=true;});});
-  var allTeams=Object.keys(teamSet).sort(function(a,b){return parseInt(a)-parseInt(b);});
-
-  // 🔌 BACKEND: epaCache and rankCache populated by getTeamStats()
-  var epaCache=ld('vana2-epa',{});
-  var rankCache=ld('vana2-rank',{});
-
-  var h='';
-
-  // Header note
-  h+='<div class="stub-pill" style="margin-bottom:16px;">🔌 EPA & Rank populated by getTeamStats() in api.js</div>';
-
-  // Column headers
-  h+='<div style="display:grid;grid-template-columns:56px 1fr 70px 60px 60px;gap:8px;padding:0 4px 8px;border-bottom:1px solid var(--border);margin-bottom:8px;">'
+  var teamSet={};notes.forEach(function(n){teamSet[n.team]=true;});matches.forEach(function(m){m.red.concat(m.blue).forEach(function(t){teamSet[t]=true;});});
+  var allTeams=Object.keys(teamSet);
+  var epaCache=ld('vana2-epa',{});var rankCache=ld('vana2-rank',{});
+  var h='<div style="display:grid;grid-template-columns:56px 1fr 70px 60px 60px;gap:8px;padding:0 4px 8px;border-bottom:1px solid var(--border);margin-bottom:8px;">'
     +'<div style="font-size:0.6rem;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:0.08em;">#</div>'
     +'<div style="font-size:0.6rem;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:0.08em;">Team</div>'
     +'<div style="font-size:0.6rem;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:0.08em;text-align:center;">Rating</div>'
     +'<div style="font-size:0.6rem;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:0.08em;text-align:center;">EPA</div>'
     +'<div style="font-size:0.6rem;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:0.08em;text-align:center;">Rank</div>'
     +'</div>';
-
-  if(!allTeams.length){
-    h+='<div class="empty"><div class="empty-i">📊</div><div class="empty-t">No data yet</div><div class="empty-s">Add matches and notes to see stats</div></div>';
-    el.innerHTML=h; return;
-  }
-
-  // Sort by EPA desc if available, else rank asc, else team number
-  allTeams.sort(function(a,b){
-    var ea=epaCache[a], eb=epaCache[b];
-    if(ea!=null && eb!=null) return eb-ea;
-    if(ea!=null) return -1;
-    if(eb!=null) return 1;
-    var ra=rankCache[a], rb=rankCache[b];
-    if(ra!=null && rb!=null) return ra-rb;
-    if(ra!=null) return -1;
-    if(rb!=null) return 1;
-    return parseInt(a)-parseInt(b);
-  });
-
-  allTeams.forEach(function(t, i){
-    var r=ratings[t]||0;
-    var stars='';
-    for(var j=1;j<=5;j++) stars+=(j<=r ? '★' : '☆');
-    var epa=epaCache[t]!=null ? epaCache[t] : '—';
-    var rank=rankCache[t]!=null ? '#'+rankCache[t] : '—';
-    var isTop=rankCache[t]!=null && rankCache[t]<=8;
+  if(!allTeams.length){h+='<div class="empty"><div class="empty-i">📊</div><div class="empty-t">No data yet</div><div class="empty-s">Add matches to see stats</div></div>';el.innerHTML=h;return;}
+  allTeams.sort(function(a,b){var ea=epaCache[a],eb=epaCache[b];if(ea!=null&&eb!=null)return eb-ea;if(ea!=null)return -1;if(eb!=null)return 1;var ra=rankCache[a],rb=rankCache[b];if(ra!=null&&rb!=null)return ra-rb;if(ra!=null)return -1;if(rb!=null)return 1;return parseInt(a)-parseInt(b);});
+  allTeams.forEach(function(t){
+    var r=ratings[t]||0;var stars='';for(var j=1;j<=5;j++)stars+=(j<=r?'★':'☆');
+    var epa=epaCache[t]!=null?epaCache[t]:'—';
+    var rank=rankCache[t]!=null?'#'+rankCache[t]:'—';
+    var isTop=rankCache[t]!=null&&rankCache[t]<=8;
     h+='<div style="display:grid;grid-template-columns:56px 1fr 70px 60px 60px;gap:8px;align-items:center;padding:9px 4px;border-bottom:1px solid var(--border);">'
       +'<div class="team-num" style="font-size:0.8rem;">'+t+'</div>'
       +'<div><div style="font-size:0.84rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+(teamNames[t]||'Team '+t)+'</div></div>'
@@ -1119,98 +555,25 @@ function renderStats(){
       +'<div style="text-align:center;font-family:JetBrains Mono,monospace;font-size:0.78rem;color:'+(isTop?'var(--yellow)':rank!=='—'?'var(--blue)':'var(--t3)')+';font-weight:500;">'+rank+'</div>'
       +'</div>';
   });
-
   el.innerHTML=h;
 }
-
-// ═══════════════════════════════════════════════
-// EXPORT / IMPORT
-// ═══════════════════════════════════════════════
 function renderExportStats(){
-  var ts=new Set(notes.map(function(n){return n.team;})).size;
-  var ms=new Set(notes.map(function(n){return n.match;})).size;
-  document.getElementById('export-stats').innerHTML=
-    '<div class="sbox"><div class="sv">'+notes.length+'</div><div class="sk">Notes</div></div>'
-    +'<div class="sbox"><div class="sv">'+ts+'</div><div class="sk">Teams</div></div>'
-    +'<div class="sbox"><div class="sv">'+ms+'</div><div class="sk">Matches</div></div>';
+  var ts=new Set(notes.map(function(n){return n.team;})).size;var ms=new Set(notes.map(function(n){return n.match;})).size;
+  document.getElementById('export-stats').innerHTML='<div class="sbox"><div class="sv">'+notes.length+'</div><div class="sk">Notes</div></div><div class="sbox"><div class="sv">'+ts+'</div><div class="sk">Teams</div></div><div class="sbox"><div class="sv">'+ms+'</div><div class="sk">Matches</div></div>';
 }
 function dl(c,m,f){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([c],{type:m}));a.download=f;document.body.appendChild(a);a.click();document.body.removeChild(a);}
-function exportJSON(){
-  dl(JSON.stringify({notes:notes,ratings:ratings,matches:matches,teamNames:teamNames,scouter:scouterName,exported:new Date().toISOString()},null,2),'application/json','vantage-export.json');
-  toast('Exported','ok');
-}
-function exportCSV(){
-  var rows=[['Team','Name','Match','Alliance','Rating','Labels','Notes','Scout','Timestamp'].join(',')];
-  notes.slice().sort(function(a,b){return parseInt(a.team)-parseInt(b.team);}).forEach(function(n){
-    rows.push([n.team,'"'+(teamNames[n.team]||'')+'"',n.match,n.alliance||'',n.rating||'','"'+(n.labels||[]).join(';')+'"','"'+(n.text||'').replace(/"/g,'""')+'"','"'+(n.scout||'')+'"','"'+(n.ts||'')+'"'].join(','));
-  });
-  dl(rows.join('\n'),'text/csv','vantage-export.csv');toast('CSV exported','ok');
-}
-function copyText(){
-  var nums=[...new Set(notes.map(function(n){return n.team;}))].sort(function(a,b){return parseInt(a)-parseInt(b);});
-  var out='Vantage Export — Breakaway FRC 2026\n\n';
-  nums.forEach(function(num){
-    var r=ratings[num]||0;var stars='';for(var i=1;i<=5;i++)stars+=(i<=r?'★':'☆');
-    out+='====== TEAM '+num+' — '+(teamNames[num]||'Unknown')+' '+stars+' ======\n';
-    notes.filter(function(n){return n.team===num;})
-      .sort(function(a,b){return(parseInt((a.match||'').replace(/\D/g,''))||0)-(parseInt((b.match||'').replace(/\D/g,''))||0);})
-      .forEach(function(n){
-        out+='\n  ['+n.match+'] '+(n.alliance?n.alliance.toUpperCase():'')+' '+(n.rating?'('+n.rating+'/5)':'');
-        if(n.labels&&n.labels.length)out+=' — '+n.labels.join(', ');
-        if(n.text)out+='\n  '+n.text;
-        out+='\n';
-      });
-    out+='\n';
-  });
-  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(out.trim()).then(function(){toast('Copied','ok');}).catch(function(){fbCopy(out);});}
-  else fbCopy(out);
-}
-function importJSON(){
-  var raw=document.getElementById('import-area').value.trim();
-  if(!raw){toast('Paste JSON first','err');return;}
-  try{
-    var data=JSON.parse(raw);
-    var imported=Array.isArray(data)?data:(data.notes||[]);
-    var existing={};notes.forEach(function(n){existing[n.id]=true;});
-    var added=0;
-    imported.forEach(function(n){if(!existing[n.id]){notes.push(n);added++;}});
-    if(data.ratings)Object.assign(ratings,data.ratings);
-    if(data.teamNames)Object.assign(teamNames,data.teamNames);
-    pN();pR();pNm();
-    renderTeams();renderMatches();
-    document.getElementById('import-area').value='';
-    toast('Imported '+added+' note'+(added!==1?'s':''),'ok');
-  }catch(e){toast('Invalid JSON','err');}
-}
-function clearAll(){if(!confirm('Delete ALL data?'))return;notes=[];ratings={};matches=[];teamNames={};pN();pR();pM();pNm();renderMatches();renderTeams();renderExportStats();toast('Cleared');}
+function exportJSON(){dl(JSON.stringify({notes:notes,ratings:ratings,matches:matches,teamNames:teamNames,scouter:scouterName,exported:new Date().toISOString()},null,2),'application/json','vantage-export.json');toast('Exported','ok');}
+function exportCSV(){var rows=[['Team','Name','Match','Alliance','Rating','Labels','Notes','Scout','Timestamp'].join(',')];notes.slice().sort(function(a,b){return parseInt(a.team)-parseInt(b.team);}).forEach(function(n){rows.push([n.team,'"'+(teamNames[n.team]||'')+ '"',n.match,n.alliance||'',n.rating||'','"'+(n.labels||[]).join(';')+ '"','"'+(n.text||'').replace(/"/g,'""')+'"','"'+(n.scout||'')+ '"','"'+(n.ts||'')+ '"'].join(','));});dl(rows.join('\n'),'text/csv','vantage-export.csv');toast('CSV exported','ok');}
+function copyText(){var nums=[...new Set(notes.map(function(n){return n.team;}))].sort(function(a,b){return parseInt(a)-parseInt(b);});var out='Vantage Export\n\n';nums.forEach(function(num){var r=ratings[num]||0;var stars='';for(var i=1;i<=5;i++)stars+=(i<=r?'★':'☆');out+='====== TEAM '+num+' — '+(teamNames[num]||'Unknown')+' '+stars+' ======\n';notes.filter(function(n){return n.team===num;}).sort(function(a,b){return(parseInt((a.match||'').replace(/\D/g,''))||0)-(parseInt((b.match||'').replace(/\D/g,''))||0);}).forEach(function(n){out+='\n  ['+n.match+'] '+(n.alliance?n.alliance.toUpperCase():'')+' '+(n.rating?'('+n.rating+'/5)':''  );if(n.labels&&n.labels.length)out+=' — '+n.labels.join(', ');if(n.text)out+='\n  '+n.text;out+='\n';});out+='\n';});if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(out.trim()).then(function(){toast('Copied','ok');}).catch(function(){fbCopy(out);});}else fbCopy(out);}
+function importJSON(){var raw=document.getElementById('import-area').value.trim();if(!raw){toast('Paste JSON first','err');return;}try{var data=JSON.parse(raw);var imported=Array.isArray(data)?data:(data.notes||[]);var existing={};notes.forEach(function(n){existing[n.id]=true;});var added=0;imported.forEach(function(n){if(!existing[n.id]){notes.push(n);added++;}});if(data.ratings)Object.assign(ratings,data.ratings);if(data.teamNames)Object.assign(teamNames,data.teamNames);pN();pR();pNm();renderTeams();renderMatches();document.getElementById('import-area').value='';toast('Imported '+added+' note'+(added!==1?'s':'')+'','ok');}catch(e){toast('Invalid JSON','err');}}
+function clearAll(){if(!confirm('Delete ALL data? This cannot be undone.'))return;notes=[];ratings={};matches=[];teamNames={};pN();pR();pM();pNm();sv('vana2-epa',{});sv('vana2-rank',{});renderMatches();renderTeams();renderExportStats();renderStats();toast('All data cleared');}
 function fbCopy(t){var ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;opacity:0;';document.body.appendChild(ta);ta.focus();ta.select();try{document.execCommand('copy');toast('Copied','ok');}catch(e){toast('Copy failed','err');}document.body.removeChild(ta);}
-
-// ═══════════════════════════════════════════════
-// SETTINGS
-// ═══════════════════════════════════════════════
-function renderSettings(){
-  document.getElementById('scouter-inp').value=scouterName;
-  var ek=localStorage.getItem('vana2-eventkey')||'';
-  document.getElementById('event-key-inp').value=ek;
-  if(ek){
-    var s=document.getElementById('event-key-status');
-    s.textContent='✓ Event key saved: '+ek;
-    s.style.color='var(--green)';
-  }
-  try{var sz=new Blob([localStorage.getItem('vana2-notes')||'']).size;document.getElementById('storage-info').textContent='~'+(sz/1024).toFixed(1)+' KB used';}catch(e){}
-}
-
-// ═══════════════════════════════════════════════
-// UTILS
-// ═══════════════════════════════════════════════
+function renderSettings(){document.getElementById('scouter-inp').value=scouterName;var ek=localStorage.getItem('vana2-eventkey')||'';document.getElementById('event-key-inp').value=ek;if(ek){var s=document.getElementById('event-key-status');s.textContent='✓ Saved: '+ek;s.style.color='var(--green)';}try{var sz=new Blob([localStorage.getItem('vana2-notes')||'']).size;document.getElementById('storage-info').textContent='~'+(sz/1024).toFixed(1)+' KB used';}catch(e){}}
 function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function toast(msg,type){var el=document.getElementById('toast');el.textContent=msg;el.className='toast show'+(type?' '+type:'');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('show');},2600);}
 function closeM(id){document.getElementById(id).classList.remove('on');}
 function bgClose(e,id){if(e.target===document.getElementById(id))closeM(id);}
-
-// ═══════════════════════════════════════════════
-// BOOT
-// ═══════════════════════════════════════════════
+document.addEventListener('click',function(e){var chip=e.target.closest('[data-team]');if(chip){var team=chip.getAttribute('data-team');var match=chip.getAttribute('data-match');var alliance=chip.getAttribute('data-alliance');if(team&&match&&alliance)openNoteModal(team,match,alliance);}});
 updateScouterBadge();
 renderMatches();
 </script>
